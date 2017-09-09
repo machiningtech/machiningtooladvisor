@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">MachiningApp</string>
+    <string name="app_name">Machining App</string>
+    <string name="face_milling">Face Milling</string>
+    <string name="slot_milling">Slot Milling</string>
+    <string name="side_milling">Side Milling</string>
+    <string name="ramping">Ramping</string>
+    <string name="profile_question">Choose the cut profile:</string>
+    <string name="input_details">Input Details:</string>
+    <string name="material">Material:</string>
+
 </resources>
