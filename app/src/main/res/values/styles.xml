@@ -6,6 +6,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/verylightgray</item>
     </style>
+
+    <style name="machining_dark" parent="AppTheme" >
+        <item name="android:colorBackground">@color/deepgray</item>
+        <item name="android:navigationBarColor">@android:color/secondary_text_light</item>
+        <item name="android:colorForeground">@android:color/holo_green_dark</item>
+        <item name="android:textColorPrimary">@android:color/background_light</item>
+        <item name="android:textColorPrimaryInverse">@android:color/background_dark</item>
+    </style>
+
 
 </resources>

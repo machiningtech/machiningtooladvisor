@@ -66,7 +66,7 @@ public class DatabaseAccess {
      */
     public List<String> getMaterials() {
         List<String> material_list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT Description FROM Material", null);
+        Cursor cursor = database.rawQuery("SELECT Description FROM Material GROUP BY ID", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             material_list.add(cursor.getString(0));
@@ -75,6 +75,33 @@ public class DatabaseAccess {
         cursor.close();
         return material_list;
     }
+
+    public List<String> FilterTools(String profile) {
+        List<String> usable_tools = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT "+ "Part_No" +" FROM Tool WHERE " + "Profile" + " LIKE '%" + profile + "%'", null);
+        // SQL query...WHERE Profile LIKE '%Slot%'. OR "WHERE Profile like "'%" + profile_tag + "'%", null, profile_tag
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            usable_tools.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return usable_tools;
+    }
+
+    public List<String> unique_corner_radius() {
+        List<String> corner_radius_list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT DISTINCT re1 FROM Tool ORDER BY re1 DESC", null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            corner_radius_list.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return corner_radius_list;
+    }
+
 
 
 
