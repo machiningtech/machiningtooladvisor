@@ -16,5 +16,21 @@
     <string name="operation_type">Operation type:</string>
     <string name="machine">Machine:</string>
     <string name="find_tools">Find Tools</string>
-
+    <string-array name="coolant_list">
+        <item>None</item>
+        <item>Air</item>
+        <item>Emulsion</item>
+        <item>Mist Spray</item>
+    </string-array>
+    <string-array name="clamping_list">
+        <item>Unstable</item>
+        <item>Normal</item>
+        <item>Stable</item>
+        <item>Very Stable</item>
+    </string-array>
+    <string-array name="operation_type_list">
+        <item>Rough</item>
+        <item>General</item>
+        <item>Finish</item>
+    </string-array>
 </resources>

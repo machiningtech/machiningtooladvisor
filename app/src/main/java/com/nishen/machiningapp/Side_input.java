@@ -1,43 +1,31 @@
 package com.nishen.machiningapp;
 
-/**
- * Created by Nishen on 2017/09/19.
- */
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
-import static com.nishen.machiningapp.R.id.material_spinner;
-import static com.nishen.machiningapp.R.id.parent;
-import static com.nishen.machiningapp.R.id.textView;
+import java.util.List;
 
+/**
+ * Created by Nishen on 2017/09/21.
+ */
 
-public class Slot_input extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Side_input extends AppCompatActivity {
 
+    Spinner material_spinner;
+    Spinner cnr_radius_spinner;
 
     /**
      * Hold a reference to the current animator, so that it can be canceled mid-way.
@@ -51,17 +39,10 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     private int mShortAnimationDuration;
 
 
-    Spinner material_spinner;
-    Spinner cnr_radius_spinner;
-    Spinner coolant_spinner;
-    Spinner operation_type_spinner;
-    Spinner machine_spinner;
-    Spinner clamping_spinner;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_slot_input);
+        setContentView(R.layout.activity_slot_input); // set for side input
 
 /**  Function to load the materials spinner data from SQLite database */
 
@@ -103,101 +84,33 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
             }
         });
 
-        final View slot_width_view = findViewById(R.id.slot_width_imagebutton);
-        slot_width_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(slot_width_view, R.drawable.profile_slot_width);
-            }
-        });
-
-        final View slot_depth_view = findViewById(R.id.slot_depth_imagebutton);
-        slot_depth_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(slot_depth_view, R.drawable.profile_slot_depth);
-            }
-        });
-
-        final View slot_cnr_radius_view = findViewById(R.id.slot_corner_radius_imagebutton);
-        slot_cnr_radius_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                zoomImageFromThumb(slot_cnr_radius_view, R.drawable.profile_slot_corner_radius);
-            }
-        });
 
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 
-        coolant_spinner = (Spinner)findViewById(R.id.coolant_spinner);
-        String[] coolantArray = getResources().getStringArray(R.array.coolant_list);
-        ArrayList<String> coolant_List = new ArrayList<String>(Arrays.asList(coolantArray));
-        ArrayAdapter<String> coolant_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, coolant_List);
-        coolant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        coolant_spinner.setAdapter(coolant_adapter);
-
-        operation_type_spinner = (Spinner)findViewById(R.id.operation_type_spinner);
-        String[] operationTypeArray = getResources().getStringArray(R.array.operation_type_list);
-        ArrayList<String> operationType_list = new ArrayList<String>(Arrays.asList(operationTypeArray));
-        ArrayAdapter<String> operationType_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, operationType_list);
-        operationType_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        operation_type_spinner.setAdapter(operationType_adapter);
-        operation_type_spinner.setSelection(1);
-
-
-        machine_spinner = (Spinner) findViewById(R.id.machine_spinner);
-        DatabaseAccess machine_db = DatabaseAccess.getInstance(this);
-        machine_db.open();
-        List<String> machine_list = machine_db.getmachines();
-        ArrayAdapter<String> machine_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, machine_list);
-        machine_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        machine_spinner.setAdapter(machine_adapter);
-        machine_db.close();
-
-        clamping_spinner = (Spinner)findViewById(R.id.clamping_spinner);
-        String[] clampingArray = getResources().getStringArray(R.array.clamping_list);
-        ArrayList<String> clamping_list = new ArrayList<String>(Arrays.asList(clampingArray));
-        ArrayAdapter<String> clampingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, clamping_list);
-        clampingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        clamping_spinner.setAdapter(clampingAdapter);
-        clamping_spinner.setSelection(1);
-
     }
 
 
-
-      //  EditText cut_length = (EditText) findViewById(R.id.cut_length);
-
+    //  EditText cut_length = (EditText) findViewById(R.id.cut_length);
 
 
 //create dummy variable to hold "slot"
 //perform filtertools. send variable with "slot" to be parsed as parameter.
 
-    public void searchtools (View view) {
+    public void searchtools(View view) {
 
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
         Bundle input_data_bundle = new Bundle();
 
         input_data_bundle.putString("profile", "slot");
-        //input_data_bundle.putString("material", "");
-        //input_data_bundle.putString("cut_length", "");
-        //input_data_bundle.putString("cut_width", "");
-        //input_data_bundle.putString("cut_depth", "");
-        //input_data_bundle.putString("max_corner_radius", "");
-        //input_data_bundle.putString("coolant", "");
-        //input_data_bundle.putString("clamping", "");
-        //input_data_bundle.putString("operation_type", "");
-        //input_data_bundle.putString("machine", "");
         filter_tools.putExtras(input_data_bundle);
-
 
 
         startActivity(filter_tools);
 
-    }
 
+    }
 
     /**
      * "Zooms" in a thumbnail view by assigning the high resolution image to a hidden "zoomed-in"
@@ -220,6 +133,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
         }
+
 
         // Load the high-resolution "zoomed-in" image.
         final ImageView expandedImageView = (ImageView) findViewById(R.id.profile_slot_length_big);
@@ -339,20 +253,6 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
             }
         });
     }
-
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-
 
 
 }

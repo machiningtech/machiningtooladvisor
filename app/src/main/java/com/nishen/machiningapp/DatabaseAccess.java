@@ -102,6 +102,20 @@ public class DatabaseAccess {
         return corner_radius_list;
     }
 
+    public List<String> getmachines() {
+        List<String> machine_list = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT Name FROM Machine ORDER BY ID ASC", null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            machine_list.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return machine_list;
+    }
+
+
 
 
 

@@ -4,35 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nishen.machiningapp.Slot_input">
+    tools:context="com.nishen.machiningapp.Slot_input"
+    android:id="@+id/container"
+    >
 
     <Spinner
         android:id="@+id/machine_spinner"
-        android:layout_width="168dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginTop="0dp"
+        android:textAlignment="textEnd"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView11" />
 
     <Spinner
         android:id="@+id/operation_type_spinner"
-        android:layout_width="168dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginTop="0dp"
+        android:textAlignment="textEnd"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <Spinner
         android:id="@+id/clamping_spinner"
-        android:layout_width="168dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginTop="0dp"
+        android:textAlignment="textEnd"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView9" />
 
@@ -42,17 +44,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginTop="0dp"
+        android:textAlignment="textEnd"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     <Spinner
         android:id="@+id/coolant_spinner"
-        android:layout_width="168dp"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginTop="0dp"
+        android:textAlignment="textEnd"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView8" />
 
@@ -64,6 +67,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginTop="66dp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/cut_width"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -84,8 +88,8 @@
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginEnd="16dp" />
 
     <EditText
         android:id="@+id/cut_width"
@@ -106,7 +110,7 @@
         android:layout_width="77dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="54dp"
+        android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="mm"
         android:inputType="number"
@@ -148,7 +152,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/length_of_cut"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
@@ -160,11 +164,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/depth_of_cut"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        tools:layout_constraintBottom_creator="1" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView6"
@@ -172,7 +175,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/width_of_cut"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
@@ -184,7 +187,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/maximum_corner_radius"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -239,14 +242,109 @@
 
     <Button
         android:id="@+id/find_tools"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@android:style/Widget.Material.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="0dp"
+        android:elevation="0dp"
         android:onClick="searchtools"
         android:text="@string/find_tools"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+
+    <!-- Initially hidden Imageviews for expandable feature dimension pictures -->
+    <ImageView
+        android:id="@+id/profile_slot_length_big"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="60dp"
+        android:translationZ="10px"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_slot_length" />
+
+    <ImageView
+        android:id="@+id/profile_slot_width_big"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="66dp"
+        android:translationZ="11px"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_slot_width" />
+
+    <ImageView
+        android:id="@+id/profile_slot_depth_big"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="84dp"
+        android:translationZ="12dp"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_slot_depth" />
+    <!-- Initially hidden Imageviews for expandable feature dimension pictures -->
+
+    <ImageView
+        android:id="@+id/profile_slot_corner_radius_big"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="90dp"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_slot_corner_radius" />
+
+    <ImageButton
+        android:id="@+id/slot_length_imagebutton"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/profile_slot_length_thumb"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="103dp"
+        android:layout_marginLeft="180dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageButton
+        android:id="@+id/slot_width_imagebutton"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="152dp"
+        android:background="@drawable/profile_slot_width_thumb"
+        app:layout_constraintLeft_toLeftOf="@+id/slot_length_imagebutton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/slot_depth_imagebutton"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/profile_slot_depth_thumb"
+        app:layout_constraintLeft_toLeftOf="@+id/slot_width_imagebutton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/slot_corner_radius_imagebutton"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/profile_slot_corner_radius_thumb"
+        app:layout_constraintLeft_toLeftOf="@+id/slot_depth_imagebutton"
+        app:layout_constraintTop_toBottomOf="@+id/slot_depth_imagebutton" />
+
 
 </android.support.constraint.ConstraintLayout>
