@@ -63,7 +63,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slot_input);
 
-/**  Function to load the materials spinner data from SQLite database */
+/**  Function to load the materials spinner data from SQLite database
 
 // Spinner element
         material_spinner = (Spinner) findViewById(R.id.material_spinner);
@@ -82,6 +82,32 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         //this.material_spinner.setAdapter(dataAdapter);    alternate
         databaseAccess.close();
 /**  Function to load the materials spinner data from SQLite database */
+
+// Cursor material spinner
+        material_spinner = (Spinner)findViewById(R.id.material_spinner);
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        databaseAccess.open();
+        Cursor materials =databaseAccess.getMaterialsCursor();
+        materialCursorAdapter adapter = new materialCursorAdapter(this, materials);
+        this.material_spinner.setAdapter(adapter);
+
+// Cursor material spinner
+
+//material spinner selection listener
+        material_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int material_id_int = material_spinner.getSelectedItemPosition();
+                String material_id = String.valueOf(material_id_int);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+//material spinner selection listener
+
 
 //Corner radius dropdown spinner
         cnr_radius_spinner = (Spinner) findViewById(R.id.corner_radius_spinner);
@@ -176,12 +202,12 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 //perform filtertools. send variable with "slot" to be parsed as parameter.
 
     public void searchtools (View view) {
-
+        //String mat = material_spinner.getItemAtPosition().toString();
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
         Bundle input_data_bundle = new Bundle();
 
         input_data_bundle.putString("profile", "slot");
-        //input_data_bundle.putString("material", "");
+        //input_data_bundle.putString("material",mat);
         //input_data_bundle.putString("cut_length", "");
         //input_data_bundle.putString("cut_width", "");
         //input_data_bundle.putString("cut_depth", "");

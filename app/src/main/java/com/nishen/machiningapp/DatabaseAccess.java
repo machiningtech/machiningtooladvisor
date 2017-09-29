@@ -64,6 +64,8 @@ public class DatabaseAccess {
      *
      * @return a List of quotes
      */
+
+    //String method. Suitable for single textview.
     public List<String> getMaterials() {
         List<String> material_list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT Description FROM Material GROUP BY ID", null);
@@ -74,6 +76,12 @@ public class DatabaseAccess {
         }
         cursor.close();
         return material_list;
+    }
+
+    public Cursor getMaterialsCursor() {
+        Cursor materialsCursor = database.rawQuery("SELECT ID _id, SMG, Description FROM Material", null);
+        return materialsCursor;
+
     }
 
     public List<String> FilterTools(String profile) {
