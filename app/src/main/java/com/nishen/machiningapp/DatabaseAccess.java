@@ -79,15 +79,24 @@ public class DatabaseAccess {
     }
 
     public Cursor getMaterialsCursor() {
-        Cursor materialsCursor = database.rawQuery("SELECT ID _id, SMG, Description FROM Material", null);
+        Cursor materialsCursor = database.rawQuery("SELECT SMG, Description FROM Material", null);
         return materialsCursor;
 
     }
 
-    public List<String> FilterTools(String profile) {
+    public Cursor FilterToolsCursor(String profile, String material) {
+        Cursor materialCursor = database.rawQuery("SELECT SMG FROM Material WHERE ID =" + material, null);
+        materialCursor.moveToFirst();
+        String SMG = materialCursor.getString(0);
+        Cursor cursor = database.rawQuery("SELECT "+ "Name, Dc, ap, zn" +" FROM Tool WHERE " + "Profile" + " LIKE '%" + profile + "%' AND " + "Material" + " LIKE '%" + SMG + "%'", null);
+        return cursor;
+    };
+
+
+ /**   public List<String> FilterTools(String profile) {
         List<String> usable_tools = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT "+ "Part_No" +" FROM Tool WHERE " + "Profile" + " LIKE '%" + profile + "%'", null);
-        // SQL query...WHERE Profile LIKE '%Slot%'. OR "WHERE Profile like "'%" + profile_tag + "'%", null, profile_tag
+
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             usable_tools.add(cursor.getString(0));
@@ -95,7 +104,7 @@ public class DatabaseAccess {
         }
         cursor.close();
         return usable_tools;
-    }
+    }**/
 
     public List<String> unique_corner_radius() {
         List<String> corner_radius_list = new ArrayList<>();

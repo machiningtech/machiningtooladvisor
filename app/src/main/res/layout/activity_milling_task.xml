@@ -43,7 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="32dp"
             android:layout_marginTop="8dp"
-            android:onClick="sidebutton"
             android:text="@string/side_milling"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
@@ -80,11 +79,12 @@
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
+            android:onClick="slotbutton"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:srcCompat="@drawable/profile_slot"
-            android:layout_marginStart="24dp" />
+            app:srcCompat="@drawable/profile_slot" />
 
         <ImageView
             android:id="@+id/imageView"

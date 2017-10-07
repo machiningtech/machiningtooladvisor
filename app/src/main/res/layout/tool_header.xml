@@ -6,9 +6,10 @@ android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/Name"
-        android:layout_width="60dp"
+        android:layout_width="60sp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:text="Name"
         android:textAlignment="center"
         android:textSize="16sp" />
 
@@ -17,6 +18,7 @@ android:layout_height="wrap_content">
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:text="Diameter"
         android:textAlignment="center"
         android:textSize="16sp" />
 
@@ -25,6 +27,7 @@ android:layout_height="wrap_content">
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:text="@string/tool_cutting_length"
         android:textAlignment="center"
         android:textSize="16sp" />
 
@@ -33,6 +36,7 @@ android:layout_height="wrap_content">
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:text="@string/tool_flute_number"
         android:textAlignment="center"
         android:textSize="16sp" />
 
@@ -41,6 +45,7 @@ android:layout_height="wrap_content">
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:text="@string/tool_depth_per_pass"
         android:textAlignment="center"
         android:textSize="16sp" />
 
@@ -49,9 +54,9 @@ android:layout_height="wrap_content">
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:text="@string/tool_width_per_pass"
         android:textAlignment="center"
         android:textSize="16sp" />
-
 
 
 </LinearLayout>

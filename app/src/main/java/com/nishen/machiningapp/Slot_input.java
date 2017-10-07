@@ -61,35 +61,28 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner machine_spinner;
     Spinner clamping_spinner;
     ArrayList<HashMap<String, String>> materialList;
-
+    String selectedMaterial;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slot_input);
-
         materialList = new ArrayList<>();
 
-
-
 /**  Function to load the materials spinner data from SQLite database */
-
-
         material_spinner = (Spinner)findViewById(R.id.material_spinner);
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
         Cursor materials =databaseAccess.getMaterialsCursor();
         materials.moveToFirst();
         while (!materials.isAfterLast()) {
-            String SMG = materials.getString(1);
-            String Description = materials.getString(2);
+            String SMG = materials.getString(0);
+            String Description = materials.getString(1);
             HashMap<String, String> material = new HashMap<>();
-
             //add each value to temporary hashmap
             material.put("SMG", SMG);
             material.put("Description", Description);
-
             //add material to materialList
             materialList.add(material);
             materials.moveToNext();
@@ -98,35 +91,9 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
         materialArrayAdapter adapter = new materialArrayAdapter(Slot_input.this, materialList);
         this.material_spinner.setAdapter(adapter);
-
-
 /**  Function to load the materials spinner data from SQLite database */
 
-//material spinner selection listener
-        material_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                int material_id_int = material_spinner.getSelectedItemPosition();
-                String material_id = Integer.toString(material_id_int);
- //               material_id = material_ide;
-
-        //        Intent intent = i_mat;
-      //          intent.putExtra("material_id", material_id);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-//material spinner selection listener
-
-
-
-
-
+    material_spinner.setOnItemSelectedListener(new materialSpinnerListener());
 
 //Corner radius dropdown spinner
         cnr_radius_spinner = (Spinner) findViewById(R.id.corner_radius_spinner);
@@ -224,12 +191,12 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     public void searchtools (View view) {
         //String mat = material_spinner.getItemAtPosition().toString();
-      //  String mat = material_id;
+        String material = selectedMaterial;
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
         Bundle input_data_bundle = new Bundle();
-
+    //insert data into bundle
         input_data_bundle.putString("profile", "slot");
-       // input_data_bundle.putString("material",mat);
+        input_data_bundle.putString("material",material);
         //input_data_bundle.putString("cut_length", "");
         //input_data_bundle.putString("cut_width", "");
         //input_data_bundle.putString("cut_depth", "");
@@ -400,7 +367,27 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     }
 
+    public class materialSpinnerListener implements OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            selectedMaterial = new String();
+            selectedMaterial = String.valueOf(pos + 1);
+  //          selectedMaterial = parent.getItemAtPosition(pos).toString();
+        }
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
+    }
 
+    public class cornerRadiusSpinnerListener implements OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            selectedMaterial = new String();
+            selectedMaterial = String.valueOf(pos + 1);
+            //          selectedMaterial = parent.getItemAtPosition(pos).toString();
+        }
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
+    }
 
 
 }
