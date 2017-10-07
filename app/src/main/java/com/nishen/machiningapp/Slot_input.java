@@ -27,6 +27,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -59,11 +60,16 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner clamping_spinner;
     public String material_id = "1";
     public  Intent i;
+    ArrayList<HashMap<String, String>> materialList;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slot_input);
+
+        materialList = new ArrayList<>();
 
         final Intent i_mat = i;
 /**  Function to load the materials spinner data from SQLite database
@@ -91,6 +97,11 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
         Cursor materials =databaseAccess.getMaterialsCursor();
+
+
+
+
+
         materialCursorAdapter adapter = new materialCursorAdapter(this, materials);
         this.material_spinner.setAdapter(adapter);
 
