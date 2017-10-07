@@ -57,12 +57,15 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner operation_type_spinner;
     Spinner machine_spinner;
     Spinner clamping_spinner;
+    public String material_id = "1";
+    public  Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slot_input);
 
+        final Intent i_mat = i;
 /**  Function to load the materials spinner data from SQLite database
 
 // Spinner element
@@ -98,7 +101,11 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int material_id_int = material_spinner.getSelectedItemPosition();
-                String material_id = String.valueOf(material_id_int);
+                String material_id = Integer.toString(material_id_int);
+
+        //        Intent intent = i_mat;
+      //          intent.putExtra("material_id", material_id);
+
             }
 
             @Override
@@ -107,6 +114,10 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
             }
         });
 //material spinner selection listener
+
+
+
+
 
 
 //Corner radius dropdown spinner
@@ -203,11 +214,12 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     public void searchtools (View view) {
         //String mat = material_spinner.getItemAtPosition().toString();
+        String mat = material_id;
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
         Bundle input_data_bundle = new Bundle();
 
         input_data_bundle.putString("profile", "slot");
-        //input_data_bundle.putString("material",mat);
+        input_data_bundle.putString("material",mat);
         //input_data_bundle.putString("cut_length", "");
         //input_data_bundle.putString("cut_width", "");
         //input_data_bundle.putString("cut_depth", "");

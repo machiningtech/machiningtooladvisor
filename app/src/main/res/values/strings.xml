@@ -33,4 +33,8 @@
         <item>General</item>
         <item>Finish</item>
     </string-array>
+    <string name="these_tools_are_usable">The following tools are able to perform your machining task:</string>
+    <string name="optimising_instructions">To optimise your tool selection, please specify your desired weightings for the following parameters:</string>
+    <string name="power_consumption">Minimise power consumption:</string>
+    <string name="optimise_tools">Optimise Tools</string>
 </resources>
