@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -58,8 +60,6 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner operation_type_spinner;
     Spinner machine_spinner;
     Spinner clamping_spinner;
-    public String material_id = "1";
-    public  Intent i;
     ArrayList<HashMap<String, String>> materialList;
 
 
@@ -71,48 +71,45 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
         materialList = new ArrayList<>();
 
-        final Intent i_mat = i;
-/**  Function to load the materials spinner data from SQLite database
 
-// Spinner element
-        material_spinner = (Spinner) findViewById(R.id.material_spinner);
-        //this.material_spinner = (Spinner) findViewById(R.id.material_spinner);   alternate
-// database handler
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
-        databaseAccess.open();
-// Spinner Drop down elements
-        List<String> materials = databaseAccess.getMaterials();
-// Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, materials);
-// Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// attaching data adapter to spinner
-        material_spinner.setAdapter(dataAdapter);
-        //this.material_spinner.setAdapter(dataAdapter);    alternate
-        databaseAccess.close();
+
 /**  Function to load the materials spinner data from SQLite database */
 
-// Cursor material spinner
+
         material_spinner = (Spinner)findViewById(R.id.material_spinner);
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
         Cursor materials =databaseAccess.getMaterialsCursor();
+        materials.moveToFirst();
+        while (!materials.isAfterLast()) {
+            String SMG = materials.getString(1);
+            String Description = materials.getString(2);
+            HashMap<String, String> material = new HashMap<>();
 
+            //add each value to temporary hashmap
+            material.put("SMG", SMG);
+            material.put("Description", Description);
 
+            //add material to materialList
+            materialList.add(material);
+            materials.moveToNext();
+        }
+        materials.close();
 
-
-
-        materialCursorAdapter adapter = new materialCursorAdapter(this, materials);
+        materialArrayAdapter adapter = new materialArrayAdapter(Slot_input.this, materialList);
         this.material_spinner.setAdapter(adapter);
 
-// Cursor material spinner
+
+/**  Function to load the materials spinner data from SQLite database */
 
 //material spinner selection listener
         material_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 int material_id_int = material_spinner.getSelectedItemPosition();
                 String material_id = Integer.toString(material_id_int);
+ //               material_id = material_ide;
 
         //        Intent intent = i_mat;
       //          intent.putExtra("material_id", material_id);
@@ -141,8 +138,10 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         cnr_radius_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cnr_radius_spinner.setAdapter(cnr_radius_adapter);
         cnr_radius_db.close();
+//Corner radius dropdown spinner
 
 
+// Zoomable image buttons
         final View slot_length_view = findViewById(R.id.slot_length_imagebutton);
         slot_length_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +176,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
         // Retrieve and cache the system's default "short" animation time.
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
+// Zoomable image buttons
 
         coolant_spinner = (Spinner)findViewById(R.id.coolant_spinner);
         String[] coolantArray = getResources().getStringArray(R.array.coolant_list);
@@ -225,12 +224,12 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     public void searchtools (View view) {
         //String mat = material_spinner.getItemAtPosition().toString();
-        String mat = material_id;
+      //  String mat = material_id;
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
         Bundle input_data_bundle = new Bundle();
 
         input_data_bundle.putString("profile", "slot");
-        input_data_bundle.putString("material",mat);
+       // input_data_bundle.putString("material",mat);
         //input_data_bundle.putString("cut_length", "");
         //input_data_bundle.putString("cut_width", "");
         //input_data_bundle.putString("cut_depth", "");
