@@ -73,7 +73,7 @@ public class materialArrayAdapter extends BaseAdapter {
         TextView SMG;
         TextView Description;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             SMG = (TextView) view.findViewById(R.id.SMG);
             Description = (TextView) view.findViewById(R.id.Description);
         }
