@@ -88,7 +88,7 @@ public class DatabaseAccess {
         Cursor materialCursor = database.rawQuery("SELECT SMG FROM Material WHERE ID =" + material, null);
         materialCursor.moveToFirst();
         String SMG = materialCursor.getString(0);
-        Cursor cursor = database.rawQuery("SELECT "+ "Name, Dc, ap, zn" +" FROM Tool WHERE " + "Profile" + " LIKE '%" + profile + "%' AND " + "Material" + " LIKE '%" + SMG + "%'", null);
+        Cursor cursor = database.rawQuery("SELECT Tool.Name, Dc, ap, zn, Part_No, Tool_Shape, dmm, l2, re1, rake, coolant, \"Ap/Dc\", \"Ae/Dc\", \"6\", \"8\", \"10\", \"12\", Vc FROM Tool, Cutdata WHERE Profile LIKE '%" + profile + "%' AND Tool.Material LIKE '%" + SMG + "%' AND Cutdata.Material LIKE '%" + SMG + "%' AND Cutdata.Name = Tool.Name AND Cutdata.Operation LIKE '%" + profile + "%'", null);
         return cursor;
     };
 

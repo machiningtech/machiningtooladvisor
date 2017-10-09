@@ -25,6 +25,7 @@ public class materialArrayAdapter extends BaseAdapter {
     TextView Description;
     Map<Integer, Integer> myMap;
     Spinner materialSpinner;
+    ViewHolder viewHolder;
 
     public materialArrayAdapter(Activity activity, ArrayList<HashMap<String, String>> myMaterialList) {
         super();
@@ -54,21 +55,27 @@ public class materialArrayAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.material_custom_item, null);
 
-            SMG = (TextView) convertView.findViewById(R.id.SMG);
-            Description = (TextView) convertView.findViewById(R.id.Description);
-            materialSpinner = (Spinner) convertView.findViewById(R.id.material_spinner);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
+    // grab temporary material from material arraylist
         HashMap<String, String> map = myMaterialList.get(position);
-        SMG.setText(map.get("SMG"));
-        Description.setText(map.get("Description"));
 
+        viewHolder.SMG.setText(map.get("SMG"));
+        viewHolder.Description.setText(map.get("Description"));
 
         return convertView;
-
     }
 
+    private class ViewHolder {
+        TextView SMG;
+        TextView Description;
 
-
-
+        public ViewHolder(View view) {
+            SMG = (TextView) view.findViewById(R.id.SMG);
+            Description = (TextView) view.findViewById(R.id.Description);
+        }
+    }
 }

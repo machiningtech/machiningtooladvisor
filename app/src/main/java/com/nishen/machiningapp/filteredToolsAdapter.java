@@ -28,6 +28,9 @@ public class filteredToolsAdapter extends BaseAdapter {
     TextView FluteNumber;
     TextView CutDepthPerPass;
     TextView CutWidthPerPass;
+    TextView MaterialRemovalRate;
+    TextView CuttingSpeed;
+    ViewHolder viewHolder;
 
 
 
@@ -58,35 +61,69 @@ public class filteredToolsAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.filtered_tool_single_item, null);
-            //convertView = LayoutInflater.from(context).inflate(R.layout.filtered_tool_single_item, parent, false);
-            //viewHolder = new ViewHolder(convertView);
-            //convertView.setTag(viewHolder);
+
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+
+
+            /* Non-viewholder implementation.
             Name = (TextView) convertView.findViewById(R.id.Name);
             Diameter = (TextView) convertView.findViewById(R.id.Diameter);
             CuttingLength = (TextView) convertView.findViewById(R.id.CuttingLength);
             FluteNumber = (TextView) convertView.findViewById(R.id.FluteNumber);
+            CutDepthPerPass = (TextView) convertView.findViewById(R.id.CutDepthPerPass);
+            CutWidthPerPass = (TextView) convertView.findViewById(R.id.CutWidthPerPass);
+            MaterialRemovalRate = (TextView) convertView.findViewById(R.id.MMR);
+            CuttingSpeed = (TextView) convertView.findViewById(R.id.CuttingSpeed);*/
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
+    //grab temporary tool item from arraylist of filtered tools
         HashMap<String, String> map = myToolsList.get(position);
+
+        /* Non-viewholder implementation
         Name.setText(map.get("Name"));
-        Diameter.setText(map.get("Diameter") + " mm");
-        CuttingLength.setText(map.get("CuttingLength") + " mm");
+        Diameter.setText(map.get("Diameter"));
+        CuttingLength.setText(map.get("CuttingLength"));
         FluteNumber.setText(map.get("FluteNumber"));
-        //viewHolder.toolName.setText(map.get("Name"));
-        //viewHolder.toolDiameter.setText(map.get("Diamter"));
+        CutDepthPerPass.setText(map.get("CutDepth"));
+        CutWidthPerPass.setText(map.get("CutWidth"));
+        MaterialRemovalRate.setText(map.get("MMR"));
+        CuttingSpeed.setText(map.get("CuttingSpeed")); */
+
+        viewHolder.Name.setText(map.get("Name"));
+        viewHolder.Diameter.setText(map.get("Diameter"));
+        viewHolder.CuttingLength.setText(map.get("CuttingLength"));
+        viewHolder.FluteNumber.setText(map.get("FluteNumber"));
+        viewHolder.CutDepthPerPass.setText(map.get("CutDepth"));
+        viewHolder.CutWidthPerPass.setText(map.get("CutWidth"));
+        viewHolder.MaterialRemovalRate.setText(map.get("MMR"));
+        viewHolder.CuttingSpeed.setText(map.get("CuttingSpeed"));
 
         return convertView;
-
     }
 
     private class ViewHolder {
-        TextView toolName;
-        TextView toolDiameter;
+        TextView Name;
+        TextView Diameter;
+        TextView CuttingLength;
+        TextView FluteNumber;
+        TextView CutDepthPerPass;
+        TextView CutWidthPerPass;
+        TextView MaterialRemovalRate;
+        TextView CuttingSpeed;
 
         public ViewHolder(View view) {
-            toolName = (TextView)view.findViewById(R.id.Name);
-            toolDiameter = (TextView) view.findViewById(R.id.Diameter);
+            Name = (TextView)view.findViewById(R.id.Name);
+            Diameter = (TextView) view.findViewById(R.id.Diameter);
+            CuttingLength = (TextView) view.findViewById(R.id.CuttingLength);
+            FluteNumber = (TextView) view.findViewById(R.id.FluteNumber);
+            CutDepthPerPass = (TextView) view.findViewById(R.id.CutDepthPerPass);
+            CutWidthPerPass = (TextView) view.findViewById(R.id.CutWidthPerPass);
+            MaterialRemovalRate = (TextView) view.findViewById(R.id.MMR);
+            CuttingSpeed = (TextView) view.findViewById(R.id.CuttingSpeed);
         }
+
     }
 
 

@@ -62,6 +62,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner clamping_spinner;
     ArrayList<HashMap<String, String>> materialList;
     String selectedMaterial;
+    String selectedCornerRadius;
 
 
     @Override
@@ -191,16 +192,15 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     public void searchtools (View view) {
         //String mat = material_spinner.getItemAtPosition().toString();
-        String material = selectedMaterial;
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
         Bundle input_data_bundle = new Bundle();
     //insert data into bundle
         input_data_bundle.putString("profile", "slot");
-        input_data_bundle.putString("material",material);
+        input_data_bundle.putString("material",selectedMaterial);
         //input_data_bundle.putString("cut_length", "");
         //input_data_bundle.putString("cut_width", "");
         //input_data_bundle.putString("cut_depth", "");
-        //input_data_bundle.putString("max_corner_radius", "");
+        input_data_bundle.putString("max_corner_radius", selectedCornerRadius);
         //input_data_bundle.putString("coolant", "");
         //input_data_bundle.putString("clamping", "");
         //input_data_bundle.putString("operation_type", "");
@@ -380,9 +380,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     public class cornerRadiusSpinnerListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            selectedMaterial = new String();
-            selectedMaterial = String.valueOf(pos + 1);
-            //          selectedMaterial = parent.getItemAtPosition(pos).toString();
+            selectedCornerRadius = new String();
+            selectedCornerRadius = parent.getItemAtPosition(pos).toString();
         }
         public void onNothingSelected(AdapterView parent) {
             // Do nothing.

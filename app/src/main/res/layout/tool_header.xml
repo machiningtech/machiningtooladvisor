@@ -2,59 +2,98 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:orientation="horizontal"
 android:layout_width="match_parent"
-android:layout_height="wrap_content">
+android:layout_height="wrap_content"
+    android:weightSum="1"
+>
 
     <TextView
-        android:id="@+id/Name"
-        android:layout_width="60sp"
+        android:id="@+id/Name_header"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.10"
         android:padding="6dp"
-        android:text="Name"
+        android:text="@string/family_name"
+        android:layout_marginStart="8dp"
         android:textAlignment="center"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/Diameter"
+        android:id="@+id/Diameter_header"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
-        android:text="Diameter"
+        android:text="@string/tool_diameter_mm"
+        android:layout_marginStart="8dp"
         android:textAlignment="center"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/CuttingLength"
+        android:id="@+id/CuttingLength_header"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:layout_marginStart="8dp"
         android:text="@string/tool_cutting_length"
         android:textAlignment="center"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/FluteNumber"
+        android:id="@+id/FluteNumber_header"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:layout_marginStart="8dp"
         android:text="@string/tool_flute_number"
         android:textAlignment="center"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/CutDepthPerPass"
+        android:id="@+id/CutDepthPerPass_header"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:layout_marginStart="8dp"
         android:text="@string/tool_depth_per_pass"
         android:textAlignment="center"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/CutWidthPerPass"
+        android:id="@+id/CutWidthPerPass_header"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:padding="6dp"
+        android:layout_marginStart="8dp"
         android:text="@string/tool_width_per_pass"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/CuttingSpeed_header"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/cutting_speed_m_min"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/CuttingPower_header"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/cutting_power_kw"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/MMR_header"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/material_removal_rate_mm3_min"
         android:textAlignment="center"
         android:textSize="16sp" />
 

@@ -10,6 +10,7 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:textAlignment="center"
+        android:layout_marginStart="8dp"
         android:textSize="16sp" />
 
     <TextView
@@ -18,6 +19,7 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:textAlignment="center"
+        android:layout_marginStart="8dp"
         android:textSize="16sp" />
 
     <TextView
@@ -26,6 +28,7 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:textAlignment="center"
+        android:layout_marginStart="8dp"
         android:textSize="16sp" />
 
     <TextView
@@ -34,6 +37,7 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:textAlignment="center"
+        android:layout_marginStart="8dp"
         android:textSize="16sp" />
 
     <TextView
@@ -42,6 +46,7 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:textAlignment="center"
+        android:layout_marginStart="8dp"
         android:textSize="16sp" />
 
     <TextView
@@ -50,8 +55,34 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:padding="6dp"
         android:textAlignment="center"
+        android:layout_marginStart="8dp"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/CuttingSpeed"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/CuttingPower"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/MMR"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:textSize="16sp" />
 
 </LinearLayout>

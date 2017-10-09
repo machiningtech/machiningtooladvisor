@@ -37,10 +37,15 @@
     <string name="optimising_instructions">To optimise your tool selection, please specify your desired weightings for the following parameters:</string>
     <string name="power_consumption">Minimise power consumption:</string>
     <string name="optimise_tools">Optimise Tools</string>
-    <string name="tool_cutting_length">Cutting Length</string>
+    <string name="tool_cutting_length">Cutting Length (mm)</string>
     <string name="tool_flute_number">No. of Flutes</string>
-    <string name="tool_depth_per_pass">Cut depth per pass</string>
-    <string name="tool_width_per_pass">Cut width per pass</string>
+    <string name="tool_depth_per_pass">Cut depth per pass (mm)</string>
+    <string name="tool_width_per_pass">Cut width per pass (mm)</string>
+    <string name="family_name">Family Name</string>
+    <string name="tool_diameter_mm">Tool Diameter (mm)</string>
+    <string name="cutting_speed_m_min">Cutting Speed (m/min)</string>
+    <string name="cutting_power_kw">Cutting Power (kW)</string>
+    <string name="material_removal_rate_mm3_min">Material Removal Rate (mm3/min)</string>
 
 
 </resources>
