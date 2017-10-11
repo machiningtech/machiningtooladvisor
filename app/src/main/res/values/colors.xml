@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#039be5</color>
-    <color name="colorPrimaryDark">#006db3</color>
-    <color name="colorAccent">#006db3</color>
+    <color name="colorPrimary">#008bcf</color>
+    <color name="colorPrimaryDark">#007ec9</color>
+    <color name="colorAccent">#007ad1</color>
     <color name="deepgray">#0a0a0a</color>
     <color name="verylightgray">#e6e6e6</color>
     <color name="machiningred">#B70909</color>
+    <color name="background_material_dark">#212121</color>
+    <color name="primary_dark_material_dark">#000000</color>
+    <color name="machining_dark">#0069a8</color>
+    <color name="machining_status">#005490</color>
 </resources>

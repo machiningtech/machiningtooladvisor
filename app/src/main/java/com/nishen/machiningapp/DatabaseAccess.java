@@ -88,7 +88,7 @@ public class DatabaseAccess {
         Cursor materialCursor = database.rawQuery("SELECT SMG FROM Material WHERE ID =" + material, null);
         materialCursor.moveToFirst();
         String SMG = materialCursor.getString(0);
-        Cursor cursor = database.rawQuery("SELECT Tool.Name, Dc, ap, zn, Part_No, Tool_Shape, dmm, l2, re1, rake, coolant, \"Ap/Dc\", \"Ae/Dc\", \"6\", \"8\", \"10\", \"12\", Vc FROM Tool, Cutdata WHERE Profile LIKE '%" + profile + "%' AND Tool.Material LIKE '%" + SMG + "%' AND Cutdata.Material LIKE '%" + SMG + "%' AND Cutdata.Name = Tool.Name AND Cutdata.Operation LIKE '%" + profile + "%'", null);
+        Cursor cursor = database.rawQuery("SELECT Tool.Name, Dc, ap, zn, Part_No, Tool_Shape, dmm, l2, re1, rake, coolant, \"Ap/Dc\", \"Ae/Dc\", \"6\", \"8\", \"10\", \"12\", Vc FROM Tool, Cutdata WHERE Profile LIKE '%" + profile + "%' AND Tool.Material LIKE '%" + SMG + "%' AND Cutdata.Material LIKE '" + SMG + "' AND Cutdata.Name = Tool.Name AND Cutdata.Operation LIKE '" + profile + "'", null);
         return cursor;
     };
 
@@ -132,7 +132,10 @@ public class DatabaseAccess {
         return machine_list;
     }
 
-
+    public Cursor getMaterialData(String materialID){
+        Cursor cursor = database.rawQuery("SELECT SMG, HB, UTS, kc FROM Material WHERE ID = '" + materialID + "'", null);
+        return cursor;
+    }
 
 
 

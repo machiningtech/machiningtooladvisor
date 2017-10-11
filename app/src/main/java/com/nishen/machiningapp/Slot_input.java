@@ -15,6 +15,7 @@ import android.graphics.Rect;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
@@ -68,6 +69,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot"));
         setContentView(R.layout.activity_slot_input);
         materialList = new ArrayList<>();
 

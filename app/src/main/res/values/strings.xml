@@ -35,7 +35,6 @@
     </string-array>
     <string name="these_tools_are_usable">The following tools are able to perform your machining task:</string>
     <string name="optimising_instructions">To optimise your tool selection, please specify your desired weightings for the following parameters:</string>
-    <string name="power_consumption">Minimise power consumption:</string>
     <string name="optimise_tools">Optimise Tools</string>
     <string name="tool_cutting_length">Cutting Length (mm)</string>
     <string name="tool_flute_number">No. of Flutes</string>
@@ -46,6 +45,10 @@
     <string name="cutting_speed_m_min">Cutting Speed (m/min)</string>
     <string name="cutting_power_kw">Cutting Power (kW)</string>
     <string name="material_removal_rate_mm3_min">Material Removal Rate (mm3/min)</string>
-
+    <string name="power_consumption">Minimise power consumption:</string>
+    <string name="tool_life">Maximise tool life:</string>
+    <string name="material_removal_rate">Maximise material removal rate:</string>
+    <string name="surface_roughness">Minimise surface roughness:</string>
+    <string name="shear_plane_deformation">Minimise shear deformation(TEMP):</string>
 
 </resources>

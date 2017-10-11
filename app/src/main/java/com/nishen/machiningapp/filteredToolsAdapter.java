@@ -20,17 +20,9 @@ import java.util.Map;
 public class filteredToolsAdapter extends BaseAdapter {
 
 
-    public ArrayList<HashMap<String, String>> myToolsList;
-    Activity activity;
-    TextView Name;
-    TextView Diameter;
-    TextView CuttingLength;
-    TextView FluteNumber;
-    TextView CutDepthPerPass;
-    TextView CutWidthPerPass;
-    TextView MaterialRemovalRate;
-    TextView CuttingSpeed;
-    ViewHolder viewHolder;
+    private ArrayList<HashMap<String, String>> myToolsList;
+    private Activity activity;
+    private ViewHolder viewHolder;
 
 
 
@@ -99,6 +91,7 @@ public class filteredToolsAdapter extends BaseAdapter {
         viewHolder.CutWidthPerPass.setText(map.get("CutWidth"));
         viewHolder.MaterialRemovalRate.setText(map.get("MMR"));
         viewHolder.CuttingSpeed.setText(map.get("CuttingSpeed"));
+        viewHolder.CuttingPower.setText(map.get("CuttingPower"));
 
         return convertView;
     }
@@ -112,6 +105,7 @@ public class filteredToolsAdapter extends BaseAdapter {
         TextView CutWidthPerPass;
         TextView MaterialRemovalRate;
         TextView CuttingSpeed;
+        TextView CuttingPower;
 
         public ViewHolder(View view) {
             Name = (TextView)view.findViewById(R.id.Name);
@@ -122,6 +116,7 @@ public class filteredToolsAdapter extends BaseAdapter {
             CutWidthPerPass = (TextView) view.findViewById(R.id.CutWidthPerPass);
             MaterialRemovalRate = (TextView) view.findViewById(R.id.MMR);
             CuttingSpeed = (TextView) view.findViewById(R.id.CuttingSpeed);
+            CuttingPower = (TextView) view.findViewById(R.id.CuttingPower);
         }
 
     }

@@ -9,32 +9,32 @@
         android:roundIcon="@mipmap/endmill_launcher_cropped"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".Milling_task">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-            </intent-filter>
-        </activity>
-        
-        <activity android:name=".Slot_input">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Slot_input">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
 
-
-        <activity android:name=".Tool_filter_results"></activity>
-
+            </intent-filter>
+        </activity>
+        <activity android:name=".Tool_filter_results" />
         <activity android:name=".Side_input">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
-
         </activity>
-
+        <activity android:name=".Optimise_tools">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Machine_management" />
+        <activity android:name=".Application_settings"></activity>
     </application>
 
 </manifest>

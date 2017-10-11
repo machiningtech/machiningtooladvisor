@@ -27,7 +27,7 @@ import static android.content.Intent.getIntent;
 public class Tool_filter_results extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> filteredTools;
-    String material;
+    String materialID;
     ListView tool_results_list;
     TextView Diameter_header;
     TextView CuttingLength_header;
@@ -40,8 +40,9 @@ public class Tool_filter_results extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot<big>&#8658</big>Tools"));
         setContentView(R.layout.activity_tool_filter_results);
-        material = new String();
+        materialID = new String();
         filteredTools = new ArrayList<>();
 
 //Format header columns
@@ -71,7 +72,7 @@ public class Tool_filter_results extends AppCompatActivity {
 // Grab Intent data from input field
         Bundle tool_search_bundle = getIntent().getExtras();
         String cut_profile = tool_search_bundle.getString("profile");
-        material = tool_search_bundle.getString("material");
+        materialID = tool_search_bundle.getString("material");
         //String cut_length = tool_search_bundle.getString("cut_length");
         //String cut_width = tool_search_bundle.getString("cut_width");
         //String cut_depth = tool_search_bundle.getString("cut_depth");
@@ -89,7 +90,7 @@ public class Tool_filter_results extends AppCompatActivity {
         DatabaseAccess tool_search_db = DatabaseAccess.getInstance(this);
         tool_search_db.open();
         //Parse input data for database query
-        Cursor tool_search_list = tool_search_db.FilterToolsCursor(cut_profile, material);
+        Cursor tool_search_list = tool_search_db.FilterToolsCursor(cut_profile, materialID);
         //Parse input data for database query
         tool_search_list.moveToFirst();
         while (!tool_search_list.isAfterLast()) {
@@ -111,6 +112,13 @@ public class Tool_filter_results extends AppCompatActivity {
             String Fz10 = tool_search_list.getString(15);
             String Fz12 = tool_search_list.getString(16);
             String Cutting_speed = tool_search_list.getString(17);
+
+
+            Cursor MaterialData = tool_search_db.getMaterialData(materialID);
+            MaterialData.moveToFirst();
+            String HB = MaterialData.getString(1);
+            String UTS = MaterialData.getString(2);
+            String kc = MaterialData.getString(3);
 
 /**     Calculate power, etc.. and filter hashmap for individual tool **/
     //Assign feed/tooth (mm) based on Diameter
@@ -153,10 +161,11 @@ public class Tool_filter_results extends AppCompatActivity {
             String Material_removal_rate = formatter1.format(MMR);
 
     //Cutting power calculations
-            //Float SpecificCuttingEnergy = ; // Ks
-            //Float CuttingPower = MMR * SpecificCuttingEnergy;
+            double SpecificCuttingEnergy = Double.parseDouble(kc); // Ks
+            double CuttingPower = MMR * SpecificCuttingEnergy;
     //Cutting power calculations
 
+            String Cutting_power = formatter2.format(CuttingPower / (60 * 1000)); //kW formatting
 
     //Tool wear calculations
             double n = 1; // work hardening factor of material. May be unnecessary in comparison
@@ -191,7 +200,7 @@ public class Tool_filter_results extends AppCompatActivity {
 
     //Cutting force calculations
 
-            //Float Ks = SpecificCuttingEnergy;
+            //Float Kc = SpecificCuttingEnergy;
             //Float CuttingForce = Ks * CutDepth * Fz;
     //Cutting force calculations
 
@@ -229,7 +238,7 @@ public class Tool_filter_results extends AppCompatActivity {
             tool.put("Fz", Feed_per_tooth);
             tool.put("CuttingSpeed", Cutting_speed);
             tool.put("MMR", Material_removal_rate);
-
+            tool.put("CuttingPower", Cutting_power);
             filteredTools.add(tool);
 
 
@@ -241,8 +250,9 @@ public class Tool_filter_results extends AppCompatActivity {
 
 
             tool_search_list.close();
-            filteredToolsAdapter cnr_radius_adapter = new filteredToolsAdapter(this, filteredTools);
-            tool_results_list.setAdapter(cnr_radius_adapter);
+
+            filteredToolsAdapter tool_filter_adapter = new filteredToolsAdapter(this, filteredTools);
+            tool_results_list.setAdapter(tool_filter_adapter);
             tool_search_db.close();
 
 /** Populating Tool results listview **/
@@ -251,10 +261,18 @@ public class Tool_filter_results extends AppCompatActivity {
 
 
         TextView testView = (TextView) findViewById(R.id.testview);
-        testView.setText(material);
+        testView.setText(materialID);
 
 
+    } //onCreate
+
+
+    public void OptimiseTools(View view) {
+        Intent optimise_tools_intent = new Intent(getApplicationContext(), Optimise_tools.class);
+        startActivity(optimise_tools_intent);
     }
+
+
 
 
 }
