@@ -51,4 +51,7 @@
     <string name="surface_roughness">Minimise surface roughness:</string>
     <string name="shear_plane_deformation">Minimise shear deformation(TEMP):</string>
 
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

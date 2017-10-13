@@ -62,8 +62,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner machine_spinner;
     Spinner clamping_spinner;
     ArrayList<HashMap<String, String>> materialList;
-    String selectedMaterial;
-    String selectedCornerRadius;
+
 
 
     @Override
@@ -72,6 +71,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot"));
         setContentView(R.layout.activity_slot_input);
         materialList = new ArrayList<>();
+        ((MachiningData)getApplicationContext()).setProfile("Slot"); //set global Profile variable
 
 /**  Function to load the materials spinner data from SQLite database */
         material_spinner = (Spinner)findViewById(R.id.material_spinner);
@@ -195,25 +195,38 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     public void searchtools (View view) {
         //String mat = material_spinner.getItemAtPosition().toString();
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
-        Bundle input_data_bundle = new Bundle();
+        //Bundle input_data_bundle = new Bundle();
     //insert data into bundle
-        input_data_bundle.putString("profile", "slot");
-        input_data_bundle.putString("material",selectedMaterial);
+
         //input_data_bundle.putString("cut_length", "");
         //input_data_bundle.putString("cut_width", "");
         //input_data_bundle.putString("cut_depth", "");
-        input_data_bundle.putString("max_corner_radius", selectedCornerRadius);
         //input_data_bundle.putString("coolant", "");
         //input_data_bundle.putString("clamping", "");
         //input_data_bundle.putString("operation_type", "");
         //input_data_bundle.putString("machine", "");
-        filter_tools.putExtras(input_data_bundle);
+        //filter_tools.putExtras(input_data_bundle);
 
+        //Grab cut dimensions and add to global variables
+        EditText CutLength = (EditText)findViewById(R.id.cut_length);
+        String cut_length = CutLength.getText().toString();
+        ((MachiningData)getApplicationContext()).setCutLength(cut_length);
+
+        EditText CutWidth = (EditText)findViewById(R.id.cut_width);
+        String cut_width = CutWidth.getText().toString();
+        ((MachiningData)getApplicationContext()).setCutWidth(cut_width);
+
+        EditText CutDepth = (EditText)findViewById(R.id.cut_depth);
+        String cut_depth = CutDepth.getText().toString();
+        ((MachiningData)getApplicationContext()).setCutDepth(cut_depth);
 
 
         startActivity(filter_tools);
 
     }
+
+
+
 
 
     /**
@@ -371,8 +384,9 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     public class materialSpinnerListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            selectedMaterial = new String();
+            String selectedMaterial = new String();
             selectedMaterial = String.valueOf(pos + 1);
+            ((MachiningData)getApplicationContext()).setSelectedMaterial(selectedMaterial);
   //          selectedMaterial = parent.getItemAtPosition(pos).toString();
         }
         public void onNothingSelected(AdapterView parent) {
@@ -382,8 +396,9 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     public class cornerRadiusSpinnerListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            selectedCornerRadius = new String();
+            String selectedCornerRadius = new String();
             selectedCornerRadius = parent.getItemAtPosition(pos).toString();
+            ((MachiningData)getApplicationContext()).setCornerRadius(selectedCornerRadius);
         }
         public void onNothingSelected(AdapterView parent) {
             // Do nothing.

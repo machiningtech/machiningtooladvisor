@@ -27,7 +27,6 @@ import static android.content.Intent.getIntent;
 public class Tool_filter_results extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> filteredTools;
-    String materialID;
     ListView tool_results_list;
     TextView Diameter_header;
     TextView CuttingLength_header;
@@ -42,7 +41,7 @@ public class Tool_filter_results extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot<big>&#8658</big>Tools"));
         setContentView(R.layout.activity_tool_filter_results);
-        materialID = new String();
+        String materialID = new String();
         filteredTools = new ArrayList<>();
 
 //Format header columns
@@ -69,14 +68,14 @@ public class Tool_filter_results extends AppCompatActivity {
 
 //Format header columns
 
-// Grab Intent data from input field
-        Bundle tool_search_bundle = getIntent().getExtras();
-        String cut_profile = tool_search_bundle.getString("profile");
-        materialID = tool_search_bundle.getString("material");
+// Grab input data from MachiningData global class
+        //Bundle tool_search_bundle = getIntent().getExtras();
+        materialID = ((MachiningData)getApplicationContext()).getSelectedMaterial();
+        String cut_profile = ((MachiningData)getApplicationContext()).getProfile();
         //String cut_length = tool_search_bundle.getString("cut_length");
         //String cut_width = tool_search_bundle.getString("cut_width");
         //String cut_depth = tool_search_bundle.getString("cut_depth");
-        String max_corner_radius = tool_search_bundle.getString("max_corner_radius");
+        String max_corner_radius = ((MachiningData)getApplicationContext()).getCornerRadius();
         //String coolant = tool_search_bundle.getString("coolant");
         //String clamping = tool_search_bundle.getString("clamping");
         //String operation_type = tool_search_bundle.getString("operation_type");
@@ -167,28 +166,59 @@ public class Tool_filter_results extends AppCompatActivity {
 
             String Cutting_power = formatter2.format(CuttingPower / (60 * 1000)); //kW formatting
 
+    //Cutting force calculations
+
+            //Float Kc = SpecificCuttingEnergy;
+            //Float CuttingForce = Ks * CutDepth * Fz;
+            //Cutting force calculations
+
+
+    //Shear plane deformation calculations
+
+            //double Yield = Double.parseDouble(Yield);
+            //double ChipCompressionRatio = UTS/Yield;  //Very similar to cutting ratio
+
+            double Gamma0 = Double.parseDouble(rakeAngle); //tool rake angle
+
+            //ChipCompressionRatio = cos(phi - Gamma0) / sin (phi)
+            //Solving for phi (shear angle)
+            //double phi = Math.atan(Math.cos(Gamma0) / (ChipCompressionRatio - Math.sin(Gamma0)));
+
+
+            //double phi = (pi / 4)-(Beta - Gamma0) ;
+            //Solving for beta (tool-interface friction)
+            //double Beta = (pi / 4) + Gamma0 + phi;
+
+            //double ShearStrain = Math.cos(Gamma0) / (Math.sin(phi) - Math.cos(phi - Gamma0));
+
+
+
+
+    //Shear plane deformation calculations
+
+
+
     //Tool wear calculations
             double n = 1; // work hardening factor of material. May be unnecessary in comparison
-            double Py = 1; // yield strength of material.
+            //double Py = Yield; // yield strength of material.
             double Em = 1; // Elastic modulus of material.
             double Wn = 1; // Normal load.
             double Kc = 1; //Fracture toughness of material.
             double H = 1; // hardness of material.
 
+
+//cutting forces...foraxial load
+
+
+
             double Length_of_cut = 10; // from input page
             double ChipNumber = Length_of_cut / Fz;
-            //float Radius = Diameter / 2;
 
-            //My method
-            //float ContactAngle = arccos((Radius - CutWidth) / Radius); //Angle of contact from tool center
-            //float ContactLength = pi * Diameter * ContactAngle / (2 * pi);
-
-            //Kuppuswamy
             double ContactLength = Math.sqrt(CutDepth * diameter);
 
             double L = ChipNumber * ContactLength / zn ; // sliding distance per tooth
 
-            double ToolWear = (n * n) * ((Py * Em *(Math.pow(Wn, 3 / 2)))/(Kc * Kc * (Math.pow(H, 3 / 2)))) * L ;
+            //double ToolWear = (n * n) * ((Py * Em *(Math.pow(Wn, 3 / 2)))/(Kc * Kc * (Math.pow(H, 3 / 2)))) * L ;
 
     //Tool wear calculations
 
@@ -198,24 +228,7 @@ public class Tool_filter_results extends AppCompatActivity {
             double Roughness = (Fz * Fz) / (31.2 * rn) ; //Ra (mm)
     //Surface roughness calculations
 
-    //Cutting force calculations
 
-            //Float Kc = SpecificCuttingEnergy;
-            //Float CuttingForce = Ks * CutDepth * Fz;
-    //Cutting force calculations
-
-
-    //Shear plane deformation calculations
-
-
-
-            double Gamma0 = Double.parseDouble(rakeAngle); //tool rake angle
-            double Beta = 1; //tool-interface friction. usually 0.3 - 0.7
-            double phi = (pi / 4)-(Beta - Gamma0) ;
-
-
-
-    //Shear plane deformation calculations
 
 
  /**     Calculate power, etc.. and filter hashmap for individual tool  **/
@@ -261,7 +274,7 @@ public class Tool_filter_results extends AppCompatActivity {
 
 
         TextView testView = (TextView) findViewById(R.id.testview);
-        testView.setText(materialID);
+        testView.setText(((MachiningData)getApplicationContext()).getCutLength());
 
 
     } //onCreate

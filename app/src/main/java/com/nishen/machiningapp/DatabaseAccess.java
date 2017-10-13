@@ -137,6 +137,13 @@ public class DatabaseAccess {
         return cursor;
     }
 
+    public void setMachine(String Name, String Power){
+        database.rawQuery("INSERT into Machine(Name, Power) VALUES ('" + Name +"'," + Power + ")", null);
+    }
+
+    public void deleteMachine (String position){
+        database.rawQuery("DELETE FROM Machine WHERE id = " + position, null);
+    }
 
 
 }
