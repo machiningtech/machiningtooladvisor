@@ -17,8 +17,16 @@ public class MachiningData extends Application {
     private String CutWidth;
     private String CutDepth;
     private String CornerRadius;
+    private String Coolant;
+    private String Clamping;
+    private String OperationType;
+    private String Machine;
 
+    private ArrayList<HashMap<String, String>> FilteredToolList;
     private ArrayList<HashMap<String, String>> ToolList;
+
+    double [] CriteriaWeightingMatrix;
+    double [] [] TOPSISmatrix;
 
 
 
@@ -67,6 +75,20 @@ public class MachiningData extends Application {
         CornerRadius = cornerRadius;
     }
 
+    public String getCoolant() {
+        return Coolant;
+    }
+    public void setCoolant(String coolant) {
+        Coolant = coolant;
+    }
+
+    public ArrayList<HashMap<String, String>> getFilteredToolList() {
+        return FilteredToolList;
+    }
+    public void setFilteredToolList(ArrayList<HashMap<String, String>> filteredToolList) {
+        FilteredToolList = filteredToolList;
+    }
+
     public ArrayList<HashMap<String, String>> getToolList() {
         return ToolList;
     }
@@ -74,9 +96,19 @@ public class MachiningData extends Application {
         ToolList = toolList;
     }
 
+    public double[] getCriteriaWeightingMatrix() {
+        return CriteriaWeightingMatrix;
+    }
+    public void setCriteriaWeightingMatrix(double[] criteriaWeightingMatrix) {
+        CriteriaWeightingMatrix = criteriaWeightingMatrix;
+    }
 
-
-
+    public double[][] getTOPSISmatrix() {
+        return TOPSISmatrix;
+    }
+    public void setTOPSISmatrix(double[][] TOPSISmatrix) {
+        this.TOPSISmatrix = TOPSISmatrix;
+    }
 
     @Override
     public void onCreate(){

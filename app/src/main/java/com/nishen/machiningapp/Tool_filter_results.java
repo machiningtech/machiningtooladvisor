@@ -8,6 +8,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextClock;
 import android.widget.TextView;
 
@@ -26,7 +27,6 @@ import static android.content.Intent.getIntent;
 
 public class Tool_filter_results extends AppCompatActivity {
 
-    ArrayList<HashMap<String, String>> filteredTools;
     ListView tool_results_list;
     TextView Diameter_header;
     TextView CuttingLength_header;
@@ -41,8 +41,9 @@ public class Tool_filter_results extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot<big>&#8658</big>Tools"));
         setContentView(R.layout.activity_tool_filter_results);
-        String materialID = new String();
-        filteredTools = new ArrayList<>();
+        String materialID;
+        ArrayList<HashMap<String, String>> filteredTools = new ArrayList<>();
+
 
 //Format header columns
         Diameter_header = (TextView) findViewById(R.id.Diameter_header);
@@ -118,6 +119,8 @@ public class Tool_filter_results extends AppCompatActivity {
             String HB = MaterialData.getString(1);
             String UTS = MaterialData.getString(2);
             String kc = MaterialData.getString(3);
+            String Yield = MaterialData.getString(4);
+            //TODO Add yield to sql query
 
 /**     Calculate power, etc.. and filter hashmap for individual tool **/
     //Assign feed/tooth (mm) based on Diameter
@@ -168,15 +171,15 @@ public class Tool_filter_results extends AppCompatActivity {
 
     //Cutting force calculations
 
-            //Float Kc = SpecificCuttingEnergy;
-            //Float CuttingForce = Ks * CutDepth * Fz;
-            //Cutting force calculations
+            double CuttingForce = SpecificCuttingEnergy * CutDepth * Fz;
+    //Cutting force calculations
 
 
     //Shear plane deformation calculations
 
-            //double Yield = Double.parseDouble(Yield);
-            //double ChipCompressionRatio = UTS/Yield;  //Very similar to cutting ratio
+            double UTStrength = Double.parseDouble(UTS);
+            double YieldStrength = Double.parseDouble(Yield);
+            double ChipCompressionRatio = UTStrength/YieldStrength;  //Very similar to cutting ratio
 
             double Gamma0 = Double.parseDouble(rakeAngle); //tool rake angle
 
@@ -199,7 +202,7 @@ public class Tool_filter_results extends AppCompatActivity {
 
 
     //Tool wear calculations
-            double n = 1; // work hardening factor of material. May be unnecessary in comparison
+            double n = 0.5; // work hardening factor of material. May be unnecessary in comparison
             //double Py = Yield; // yield strength of material.
             double Em = 1; // Elastic modulus of material.
             double Wn = 1; // Normal load.
@@ -235,6 +238,8 @@ public class Tool_filter_results extends AppCompatActivity {
 
             HashMap<String, String> tool = new HashMap<>();
             //add each value to temporary hashmap
+            // TODO: If query db again after optimise, these data not required. USE ID if re grabbing data from db. otherwise store data here.
+
             tool.put("Name", Name);
             tool.put("Diameter", Diameter);
             tool.put("CuttingLength", CuttingLength);
@@ -250,9 +255,17 @@ public class Tool_filter_results extends AppCompatActivity {
             tool.put("CutWidth", Cut_width);
             tool.put("Fz", Feed_per_tooth);
             tool.put("CuttingSpeed", Cutting_speed);
-            tool.put("MMR", Material_removal_rate);
+
             tool.put("CuttingPower", Cutting_power);
+            //tool.put("Roughness", Surface_roughness);
+            //tool.put("Shear", Shear_strain);
+            //tool.put("ToolLife", Tool_life);
+            tool.put("MMR", Material_removal_rate);
             filteredTools.add(tool);
+
+
+
+
 
 
 
@@ -263,6 +276,8 @@ public class Tool_filter_results extends AppCompatActivity {
 
 
             tool_search_list.close();
+
+
 
             filteredToolsAdapter tool_filter_adapter = new filteredToolsAdapter(this, filteredTools);
             tool_results_list.setAdapter(tool_filter_adapter);
@@ -277,13 +292,50 @@ public class Tool_filter_results extends AppCompatActivity {
         testView.setText(((MachiningData)getApplicationContext()).getCutLength());
 
 
+        ((MachiningData)getApplicationContext()).setFilteredToolList(filteredTools);
+
     } //onCreate
 
 
     public void OptimiseTools(View view) {
         Intent optimise_tools_intent = new Intent(getApplicationContext(), Optimise_tools.class);
+        double [] CriteriaWeightingMatrix = new double[4];
+
+        //grab optimisation parameter weightings
+        SeekBar power = (SeekBar)findViewById(R.id.powerSeekbar);
+        int powerWeight = power.getProgress();
+        //String PowerWeight = Integer.toString(powerWeight);
+        //((MachiningData)getApplicationContext()).setPowerWeight(powerWeight * 1.0);
+
+        SeekBar roughness = (SeekBar)findViewById(R.id.roughnessSeekBar);
+        int roughnessWeight = roughness.getProgress();
+        //((MachiningData)getApplicationContext()).setRoughnessWeight(roughnessWeight * 1.0);
+
+        SeekBar shear = (SeekBar)findViewById(R.id.shearSeekBar);
+        int shearWeight = power.getProgress();
+        //((MachiningData)getApplicationContext()).setShearWeight(shearWeight);
+
+        SeekBar toolLife = (SeekBar)findViewById(R.id.toolLifeSeekBar);
+        int toolLifeWeight = power.getProgress();
+        //((MachiningData)getApplicationContext()).setToolLifeWeight(toolLifeWeight);
+
+        SeekBar MMR = (SeekBar)findViewById(R.id.mmrSeekBar);
+        int mmrWeight = power.getProgress();
+        //((MachiningData)getApplicationContext()).setMmrWeight(mmrWeight);
+
+        CriteriaWeightingMatrix[0] = powerWeight * 1.0;
+        CriteriaWeightingMatrix[1] = roughnessWeight * 1.0;
+        CriteriaWeightingMatrix[2] = shearWeight * 1.0;
+        CriteriaWeightingMatrix[3] = toolLifeWeight * 1.0;
+        CriteriaWeightingMatrix[4] = mmrWeight * 1.0;
+
+
+        ((MachiningData)getApplicationContext()).setCriteriaWeightingMatrix(CriteriaWeightingMatrix);
+
         startActivity(optimise_tools_intent);
     }
+
+
 
 
 

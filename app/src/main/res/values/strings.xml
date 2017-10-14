@@ -49,7 +49,7 @@
     <string name="tool_life">Maximise tool life:</string>
     <string name="material_removal_rate">Maximise material removal rate:</string>
     <string name="surface_roughness">Minimise surface roughness:</string>
-    <string name="shear_plane_deformation">Minimise shear deformation(TEMP):</string>
+    <string name="shear_plane_deformation">Minimise shear deformation:</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

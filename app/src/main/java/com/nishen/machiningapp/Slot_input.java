@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,7 +62,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner operation_type_spinner;
     Spinner machine_spinner;
     Spinner clamping_spinner;
-    ArrayList<HashMap<String, String>> materialList;
+
 
 
 
@@ -70,10 +71,10 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         super.onCreate(savedInstanceState);
         setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot"));
         setContentView(R.layout.activity_slot_input);
-        materialList = new ArrayList<>();
-        ((MachiningData)getApplicationContext()).setProfile("Slot"); //set global Profile variable
+        //materialList = new ArrayList<>();
+        //cnr_radius_list = new ArrayList<>();
 
-/**  Function to load the materials spinner data from SQLite database */
+/**  Function to load the materials spinner data from SQLite database
         material_spinner = (Spinner)findViewById(R.id.material_spinner);
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
         databaseAccess.open();
@@ -96,19 +97,23 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         this.material_spinner.setAdapter(adapter);
 /**  Function to load the materials spinner data from SQLite database */
 
-    material_spinner.setOnItemSelectedListener(new materialSpinnerListener());
+    //material_spinner.setOnItemSelectedListener(new materialSpinnerListener());
 
-//Corner radius dropdown spinner
+        new SlotInputAsyncTask().execute();
+
+        //Corner radius dropdown spinner
         cnr_radius_spinner = (Spinner) findViewById(R.id.corner_radius_spinner);
-        DatabaseAccess cnr_radius_db = DatabaseAccess.getInstance(this);
+        DatabaseAccess cnr_radius_db = DatabaseAccess.getInstance(getApplicationContext());
         cnr_radius_db.open();
         List<String> cnr_radius_list = cnr_radius_db.unique_corner_radius();
         cnr_radius_list.add(0, "Any");
-        ArrayAdapter<String> cnr_radius_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cnr_radius_list);
+
+        cnr_radius_db.close();
+        ArrayAdapter<String> cnr_radius_adapter = new ArrayAdapter<String>(Slot_input.this, android.R.layout.simple_spinner_item, cnr_radius_list);
         cnr_radius_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cnr_radius_spinner.setAdapter(cnr_radius_adapter);
-        cnr_radius_db.close();
-//Corner radius dropdown spinner
+
+        //Corner radius dropdown spinner
 
 
 // Zoomable image buttons
@@ -185,26 +190,21 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
 
 
-      //  EditText cut_length = (EditText) findViewById(R.id.cut_length);
 
 
 
-//create dummy variable to hold "slot"
-//perform filtertools. send variable with "slot" to be parsed as parameter.
+
 
     public void searchtools (View view) {
-        //String mat = material_spinner.getItemAtPosition().toString();
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
         //Bundle input_data_bundle = new Bundle();
-    //insert data into bundle
+        //insert data into bundle
 
-        //input_data_bundle.putString("cut_length", "");
-        //input_data_bundle.putString("cut_width", "");
-        //input_data_bundle.putString("cut_depth", "");
         //input_data_bundle.putString("coolant", "");
         //input_data_bundle.putString("clamping", "");
         //input_data_bundle.putString("operation_type", "");
         //input_data_bundle.putString("machine", "");
+
         //filter_tools.putExtras(input_data_bundle);
 
         //Grab cut dimensions and add to global variables
@@ -370,8 +370,6 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         });
     }
 
-
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -381,6 +379,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
 
     public class materialSpinnerListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -403,6 +403,79 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         public void onNothingSelected(AdapterView parent) {
             // Do nothing.
         }
+    }
+
+    public class coolantSpinnerListener implements OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            String selectedCoolant = new String();
+            selectedCoolant = parent.getItemAtPosition(pos).toString();
+            ((MachiningData)getApplicationContext()).setCoolant(selectedCoolant);
+        }
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
+    }
+
+
+    private class SlotInputAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        ArrayList<HashMap<String, String>> materialList;
+        List<String> cnr_radius_list;
+
+        //@Override
+        //protected void onPreExecute() {}
+
+        @Override
+        protected Void doInBackground(Void...arg0) {
+
+            materialList = new ArrayList<HashMap<String, String>>();
+            //cnr_radius_list= ;
+            ((MachiningData)getApplicationContext()).setProfile("Slot"); //set global Profile variable
+
+        /**  Function to load the materials spinner data from SQLite database */
+            material_spinner = (Spinner)findViewById(R.id.material_spinner);
+            DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+            databaseAccess.open();
+            Cursor materials =databaseAccess.getMaterialsCursor();
+            materials.moveToFirst();
+            while (!materials.isAfterLast()) {
+                String SMG = materials.getString(0);
+                String Description = materials.getString(1);
+                HashMap<String, String> material = new HashMap<>();
+                //add each value to temporary hashmap
+                material.put("SMG", SMG);
+                material.put("Description", Description);
+                //add material to materialList
+                materialList.add(material);
+                materials.moveToNext();
+            }
+            materials.close();
+
+        /**  Function to load the materials spinner data from SQLite database */
+
+
+
+
+            return null;
+        }
+
+        //@Override
+        //protected void onProgressUpdate() {}
+
+        @Override
+        protected void onPostExecute(Void result) {
+
+    /**  Setting the materials spinner data from SQLite database */
+        materialArrayAdapter adapter = new materialArrayAdapter(Slot_input.this, materialList);
+        material_spinner.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        material_spinner.setOnItemSelectedListener(new materialSpinnerListener());
+
+
+
+
+        }
+
     }
 
 
