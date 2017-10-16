@@ -133,7 +133,7 @@ public class DatabaseAccess {
     }
 
     public Cursor getMaterialData(String materialID){
-        Cursor cursor = database.rawQuery("SELECT SMG, HB, UTS, kc FROM Material WHERE ID = '" + materialID + "'", null);
+        Cursor cursor = database.rawQuery("SELECT SMG, HB, UTS, kc, Yield FROM Material WHERE ID = '" + materialID + "'", null);
         return cursor;
     }
 

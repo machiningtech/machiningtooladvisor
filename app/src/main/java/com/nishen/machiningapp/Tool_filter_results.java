@@ -35,6 +35,7 @@ public class Tool_filter_results extends AppCompatActivity {
     TextView CuttingSpeed_header;
     TextView CuttingPower_header;
     TextView MMR_header;
+    ArrayList<HashMap<String, String>> filteredTools;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class Tool_filter_results extends AppCompatActivity {
         setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot<big>&#8658</big>Tools"));
         setContentView(R.layout.activity_tool_filter_results);
         String materialID;
-        ArrayList<HashMap<String, String>> filteredTools = new ArrayList<>();
+        filteredTools = new ArrayList<>();
 
 
 //Format header columns
@@ -83,7 +84,7 @@ public class Tool_filter_results extends AppCompatActivity {
         //String machine = tool_search_bundle.getString("machine");
 
 
- /** Populating Tool results listview **/
+        /** Populating Tool results listview **/
         tool_results_list= (ListView) findViewById(R.id.toolList);
         //View tool_header = getLayoutInflater().inflate(R.layout.tool_header, null);
         //tool_results_list.addHeaderView(tool_header);
@@ -120,10 +121,10 @@ public class Tool_filter_results extends AppCompatActivity {
             String UTS = MaterialData.getString(2);
             String kc = MaterialData.getString(3);
             String Yield = MaterialData.getString(4);
-            //TODO Add yield to sql query
+
 
 /**     Calculate power, etc.. and filter hashmap for individual tool **/
-    //Assign feed/tooth (mm) based on Diameter
+            //Assign feed/tooth (mm) based on Diameter
             String Feed_per_tooth = "0.1";
             if (Diameter == "6"){
                 Feed_per_tooth = Fz6;
@@ -134,12 +135,12 @@ public class Tool_filter_results extends AppCompatActivity {
             }else if (Diameter == "12"){
                 Feed_per_tooth = Fz12;
             }
-    //Assign feed/tooth (mm) based on Diameter
+            //Assign feed/tooth (mm) based on Diameter
             DecimalFormat formatter1 = new DecimalFormat("#0.0");
             DecimalFormat formatter2 = new DecimalFormat("#0.00");
             double pi = Math.PI;
 
-    //Material removal rate calculations
+            //Material removal rate calculations
             double diameter = Double.parseDouble(Diameter);
             double ApDc = Double.parseDouble(Ap_Dc);
             double CutDepth = ApDc * diameter ;
@@ -153,7 +154,7 @@ public class Tool_filter_results extends AppCompatActivity {
             double FeedVelocity = SpindleSpeed * Fz * zn;
 
             double MMR = CutDepth * CutWidth * FeedVelocity; // Q
-    //Material removal rate calculations
+            //Material removal rate calculations
 
             String Cut_depth = formatter1.format(CutDepth);
             String Cut_width = Double.toString(CutWidth);
@@ -162,20 +163,20 @@ public class Tool_filter_results extends AppCompatActivity {
 
             String Material_removal_rate = formatter1.format(MMR);
 
-    //Cutting power calculations
+            //Cutting power calculations
             double SpecificCuttingEnergy = Double.parseDouble(kc); // Ks
             double CuttingPower = MMR * SpecificCuttingEnergy;
-    //Cutting power calculations
+            //Cutting power calculations
 
             String Cutting_power = formatter2.format(CuttingPower / (60 * 1000)); //kW formatting
 
-    //Cutting force calculations
+            //Cutting force calculations
 
             double CuttingForce = SpecificCuttingEnergy * CutDepth * Fz;
-    //Cutting force calculations
+            //Cutting force calculations
 
 
-    //Shear plane deformation calculations
+            //Shear plane deformation calculations
 
             double UTStrength = Double.parseDouble(UTS);
             double YieldStrength = Double.parseDouble(Yield);
@@ -185,56 +186,60 @@ public class Tool_filter_results extends AppCompatActivity {
 
             //ChipCompressionRatio = cos(phi - Gamma0) / sin (phi)
             //Solving for phi (shear angle)
-            //double phi = Math.atan(Math.cos(Gamma0) / (ChipCompressionRatio - Math.sin(Gamma0)));
+            double phi = Math.atan(Math.cos(Gamma0) / (ChipCompressionRatio - Math.sin(Gamma0)));
 
 
             //double phi = (pi / 4)-(Beta - Gamma0) ;
             //Solving for beta (tool-interface friction)
-            //double Beta = (pi / 4) + Gamma0 + phi;
+            double Beta = (pi / 4) + Gamma0 - phi;
 
-            //double ShearStrain = Math.cos(Gamma0) / (Math.sin(phi) - Math.cos(phi - Gamma0));
+            double ShearStrain = Math.abs(Math.cos(Gamma0) / (Math.sin(phi) - Math.cos(phi - Gamma0)));
 
+            //Shear plane deformation calculations
 
+            String Shear_strain = Double.toString(ShearStrain);
 
-
-    //Shear plane deformation calculations
-
-
-
-    //Tool wear calculations
+            //Tool wear calculations
             double n = 0.5; // work hardening factor of material. May be unnecessary in comparison
-            //double Py = Yield; // yield strength of material.
+            double Py = 1; // yield strength of material.
             double Em = 1; // Elastic modulus of material.
-            double Wn = 1; // Normal load.
             double Kc = 1; //Fracture toughness of material.
             double H = 1; // hardness of material.
 
+            double Fr = CuttingForce / Math.cos(Beta - Gamma0);
+            double Wn = Fr / Math.cos(Beta);// Normal load.
 
-//cutting forces...foraxial load
 
+            String length_of_cut = ((MachiningData)getApplicationContext()).getCutLength(); // from input page
+            //if (Length_of_cut < 1) {
+            double  Length_of_cut = 10.0;
+            //}
 
-
-            double Length_of_cut = 10; // from input page
             double ChipNumber = Length_of_cut / Fz;
 
             double ContactLength = Math.sqrt(CutDepth * diameter);
 
             double L = ChipNumber * ContactLength / zn ; // sliding distance per tooth
 
-            //double ToolWear = (n * n) * ((Py * Em *(Math.pow(Wn, 3 / 2)))/(Kc * Kc * (Math.pow(H, 3 / 2)))) * L ;
+            double ToolWearOrig = (n * n) * ((Py * Em *(Math.pow(Wn, 3 / 2)))/(Kc * Kc * (Math.pow(H, 3 / 2)))) * L ;
+            double ToolWear = Math.abs(ToolWearOrig / 1000);
 
-    //Tool wear calculations
+            //Tool wear calculations
 
-    //Surface roughness calculations
+            String Tool_life = Double.toString(ToolWear);
+
+
+            //Surface roughness calculations
             //tool tip radius
             double rn = Double.parseDouble(re1);
-            double Roughness = (Fz * Fz) / (31.2 * rn) ; //Ra (mm)
-    //Surface roughness calculations
+            double RoughnessOrig = (Fz * Fz) / (31.2 * rn) ; //Ra (mm)
+            double Roughness = RoughnessOrig * 1000;
+            //Surface roughness calculations
+
+            String Surface_roughness = Double.toString(Roughness);
 
 
-
-
- /**     Calculate power, etc.. and filter hashmap for individual tool  **/
+            /**     Calculate power, etc.. and filter hashmap for individual tool  **/
 
             HashMap<String, String> tool = new HashMap<>();
             //add each value to temporary hashmap
@@ -257,31 +262,27 @@ public class Tool_filter_results extends AppCompatActivity {
             tool.put("CuttingSpeed", Cutting_speed);
 
             tool.put("CuttingPower", Cutting_power);
-            //tool.put("Roughness", Surface_roughness);
-            //tool.put("Shear", Shear_strain);
-            //tool.put("ToolLife", Tool_life);
+            tool.put("Roughness", Surface_roughness);
+            tool.put("Shear", Shear_strain);
+            tool.put("ToolLife", Tool_life);
             tool.put("MMR", Material_removal_rate);
             filteredTools.add(tool);
 
 
 
 
-
-
-
-
             tool_search_list.moveToNext();
-        }
+        }   //while loop
 
 
 
-            tool_search_list.close();
+        tool_search_list.close();
 
 
 
-            filteredToolsAdapter tool_filter_adapter = new filteredToolsAdapter(this, filteredTools);
-            tool_results_list.setAdapter(tool_filter_adapter);
-            tool_search_db.close();
+        filteredToolsAdapter tool_filter_adapter = new filteredToolsAdapter(this, filteredTools);
+        tool_results_list.setAdapter(tool_filter_adapter);
+        tool_search_db.close();
 
 /** Populating Tool results listview **/
 
@@ -299,7 +300,7 @@ public class Tool_filter_results extends AppCompatActivity {
 
     public void OptimiseTools(View view) {
         Intent optimise_tools_intent = new Intent(getApplicationContext(), Optimise_tools.class);
-        double [] CriteriaWeightingMatrix = new double[4];
+        double [] CriteriaWeightingMatrix = new double[5];
 
         //grab optimisation parameter weightings
         SeekBar power = (SeekBar)findViewById(R.id.powerSeekbar);
@@ -312,15 +313,15 @@ public class Tool_filter_results extends AppCompatActivity {
         //((MachiningData)getApplicationContext()).setRoughnessWeight(roughnessWeight * 1.0);
 
         SeekBar shear = (SeekBar)findViewById(R.id.shearSeekBar);
-        int shearWeight = power.getProgress();
+        int shearWeight = shear.getProgress();
         //((MachiningData)getApplicationContext()).setShearWeight(shearWeight);
 
         SeekBar toolLife = (SeekBar)findViewById(R.id.toolLifeSeekBar);
-        int toolLifeWeight = power.getProgress();
+        int toolLifeWeight = toolLife.getProgress();
         //((MachiningData)getApplicationContext()).setToolLifeWeight(toolLifeWeight);
 
         SeekBar MMR = (SeekBar)findViewById(R.id.mmrSeekBar);
-        int mmrWeight = power.getProgress();
+        int mmrWeight = MMR.getProgress();
         //((MachiningData)getApplicationContext()).setMmrWeight(mmrWeight);
 
         CriteriaWeightingMatrix[0] = powerWeight * 1.0;
@@ -331,6 +332,9 @@ public class Tool_filter_results extends AppCompatActivity {
 
 
         ((MachiningData)getApplicationContext()).setCriteriaWeightingMatrix(CriteriaWeightingMatrix);
+
+
+
 
         startActivity(optimise_tools_intent);
     }

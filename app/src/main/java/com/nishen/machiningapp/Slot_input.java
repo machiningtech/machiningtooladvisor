@@ -8,6 +8,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Point;
@@ -17,13 +18,20 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -34,6 +42,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import android.widget.ArrayAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import static com.nishen.machiningapp.R.id.material_spinner;
@@ -62,8 +71,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner operation_type_spinner;
     Spinner machine_spinner;
     Spinner clamping_spinner;
-
-
+    Switch user_cutdata_input;
+    TextView user_cutdata_input_edit;
 
 
     @Override
@@ -74,6 +83,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         //materialList = new ArrayList<>();
         //cnr_radius_list = new ArrayList<>();
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //TODO add popupwindow instantiator. create layout for fragments.
 /**  Function to load the materials spinner data from SQLite database
         material_spinner = (Spinner)findViewById(R.id.material_spinner);
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
@@ -167,6 +178,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         operationType_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         operation_type_spinner.setAdapter(operationType_adapter);
         operation_type_spinner.setSelection(1);
+        //TODO utilise operation type to filter tools (no explicit argument)
 
 
         machine_spinner = (Spinner) findViewById(R.id.machine_spinner);
@@ -177,6 +189,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         machine_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         machine_spinner.setAdapter(machine_adapter);
         machine_db.close();
+        //TODO utilise machine power to limit tool selection
 
         clamping_spinner = (Spinner)findViewById(R.id.clamping_spinner);
         String[] clampingArray = getResources().getStringArray(R.array.clamping_list);
@@ -185,15 +198,64 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         clampingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clamping_spinner.setAdapter(clampingAdapter);
         clamping_spinner.setSelection(1);
+        //TODO utilise clamping value
 
-    }
+        user_cutdata_input_edit = (TextView) findViewById(R.id.EditUserCutData);
+        user_cutdata_input = (Switch) findViewById(R.id.UserCutDataSwitch);
+        user_cutdata_input.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    user_cutdata_input_edit.setTextColor(R.color.colorPrimary);
+                    UserCutdataWindow();
+                } else {
+                    user_cutdata_input_edit.setTextColor(android.R.color.black);
+                }
+            }
+        });
 
 
 
 
 
 
+    }   //onCreate
 
+
+
+
+
+
+    public void UserCutdataWindow(){
+        try {
+            // get a reference to the already created main layout
+            ScrollView mainLayout = (ScrollView) findViewById(R.id.container);
+
+            // inflate the layout of the popup window
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.fragment_user_cutdata_input, null);
+
+            // create the popup window
+            boolean focusable = true; // lets taps outside the popup also dismiss it
+            final PopupWindow popupWindow = new PopupWindow(popupView, 300, 300, focusable);
+
+            // show the popup window
+            popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+
+            // dismiss the popup window when touched
+            //popupView.setOnTouchListener(new View.OnTouchListener() {
+             //   @Override
+             //   public boolean onTouch(View v, MotionEvent event) {
+             //       popupWindow.dismiss();
+             //       return true;
+              //  }
+           // });
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    };
 
     public void searchtools (View view) {
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
@@ -216,6 +278,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         String cut_width = CutWidth.getText().toString();
         ((MachiningData)getApplicationContext()).setCutWidth(cut_width);
 
+        //TODO filter tool diameter from sql db when width is less than diameter
+
         EditText CutDepth = (EditText)findViewById(R.id.cut_depth);
         String cut_depth = CutDepth.getText().toString();
         ((MachiningData)getApplicationContext()).setCutDepth(cut_depth);
@@ -224,10 +288,6 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         startActivity(filter_tools);
 
     }
-
-
-
-
 
     /**
      * "Zooms" in a thumbnail view by assigning the high resolution image to a hidden "zoomed-in"
@@ -380,8 +440,6 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     }
 
-
-
     public class materialSpinnerListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String selectedMaterial = new String();
@@ -477,6 +535,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         }
 
     }
+
+
 
 
 }

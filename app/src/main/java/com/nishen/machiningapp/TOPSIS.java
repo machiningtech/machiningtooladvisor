@@ -3,68 +3,79 @@
 package com.nishen.machiningapp;
 import java.lang.Math;
 
-public class TOPSIS
-{
-    double [] CriteriaWeightingMatrix;
-    double [][] TOPSISmatrix;
-    int Alternatives_rows, Criteria_columns;
+public class TOPSIS {
+    private double[] CriteriaWeightingMatrix;
+    private double[][] TOPSISmatrix;
+    private int rows_alternatives, columns_criteria;
 
-    double [][] normalizedDecisionMatrix;
-    double [][] weightedNormalizedDecisionMatrix;
-    double [] positiveIdealSolution;
-    double [] negativeIdealSolution;
-    double []positiveSeparationFromIdeal;
-    double []negativeSeparationFromIdeal;
-    double [] closenessCoefficient;
-    double [] sortclosenessCoefficient;
+    private double[][] normalizedDecisionMatrix;
+    private double[] normalizedWeightingMatrix;
+    private double[][] weightedNormalizedDecisionMatrix;
+    private double[] positiveIdealSolution;
+    private double[] negativeIdealSolution;
+    private double[] positiveSeparationFromIdeal;
+    private double[] negativeSeparationFromIdeal;
+    private double[] closenessCoefficient;
+    private double[] sortclosenessCoefficient;
 
 
-    public void calculate()
-    {
+    public double [] calculate() {
         calculateNormalizedDecisionMatrix();
+        calculateNormalizedWeightingMatrix();
         calculateWeightedNormalizedDecisionMatrix();
         calculatepositiveIdealSolution();
         calculatenegativeIdealSolution();
         calculatePositiveSeparationFromIdeal();
         calculateNegativeSeparationFromIdeal();
         calculateClosenessCoefficient();
-
+        return closenessCoefficient;
     }
 
-    public double [][] calculateNormalizedDecisionMatrix()
-    {
-        double [] sumPowSqrt = new double[Criteria_columns];
-        normalizedDecisionMatrix = new double[Alternatives_rows][Criteria_columns];
+    public double[][] calculateNormalizedDecisionMatrix() {
+        double[] sumPowSqrt = new double[columns_criteria];
+        normalizedDecisionMatrix = new double[rows_alternatives][columns_criteria];
 
         /*
          * Calculate Normalize Decision Matrix
          */
-        for(int col = 0; col<Criteria_columns;col++)
-        {
+        for (int col = 0; col < columns_criteria; col++) {
 
-            double sumPow=0.d;
-            for(int row = 0;row<Alternatives_rows;row++)
-            {
-                sumPow = sumPow + Math.pow(TOPSISmatrix[row][col],2);
+            double sumPow = 0.d;
+            for (int row = 0; row < rows_alternatives; row++) {
+                sumPow = sumPow + Math.pow(TOPSISmatrix[row][col], 2);
             }
-            sumPowSqrt[col]= Math.sqrt(sumPow);
-            for(int row= 0;row<TOPSISmatrix.length;row++)
-            {
-                normalizedDecisionMatrix[row][col]=TOPSISmatrix[row][col]/sumPowSqrt[col];
+            sumPowSqrt[col] = Math.sqrt(sumPow);
+            for (int row = 0; row < TOPSISmatrix.length; row++) {
+                normalizedDecisionMatrix[row][col] = TOPSISmatrix[row][col] / sumPowSqrt[col];
             }
         }
 
         return normalizedDecisionMatrix;
     }
 
+    public double[] calculateNormalizedWeightingMatrix() {
+        normalizedWeightingMatrix = new double[columns_criteria];
+
+        double sumPow = 0.d;
+        double sumPowSqrt = 0.d;
+        for (int row = 0; row < columns_criteria; row++) {
+            sumPow = sumPow + Math.pow(CriteriaWeightingMatrix[row], 2);
+        }
+        sumPowSqrt = Math.sqrt(sumPow);
+        for (int row = 0; row < columns_criteria; row++) {
+            normalizedWeightingMatrix[row] = (CriteriaWeightingMatrix[row]) / sumPowSqrt;
+        }
+        return normalizedWeightingMatrix;
+    }
+
     public double [][] calculateWeightedNormalizedDecisionMatrix()
     {
-        weightedNormalizedDecisionMatrix = new double[Alternatives_rows][Criteria_columns];
-        for(int col = 0; col<Criteria_columns;col++)
+        weightedNormalizedDecisionMatrix = new double[rows_alternatives][columns_criteria];
+        for(int col = 0; col<columns_criteria;col++)
         {
-            for(int row = 0;row<Alternatives_rows;row++)
+            for(int row = 0;row<rows_alternatives;row++)
             {
-                weightedNormalizedDecisionMatrix[row][col] = normalizedDecisionMatrix[row][col] * CriteriaWeightingMatrix[col];
+                weightedNormalizedDecisionMatrix[row][col] = normalizedDecisionMatrix[row][col] * normalizedWeightingMatrix[col];
             }
         }
 
@@ -74,19 +85,29 @@ public class TOPSIS
 
     public double [] calculatepositiveIdealSolution()
     {
-        positiveIdealSolution = new double[Criteria_columns];
-        double max = 0d;
-        for(int col = 0; col<Criteria_columns;col++)
+        positiveIdealSolution = new double[columns_criteria];
+        double max = 0.d;
+        for(int col = 0; col<columns_criteria;col++)
         {
             max = 0d;
-            for(int row = 0;row<Alternatives_rows;row++)
-            {
 
-                if(weightedNormalizedDecisionMatrix[row][col]>max)
-                {
-                    max=weightedNormalizedDecisionMatrix[row][col];
+            if (col == 4) {                                             //maximising the MMR
+                for(int row = 0;row<rows_alternatives;row++) {
+                    if (weightedNormalizedDecisionMatrix[row][col] > max) {
+                        max = weightedNormalizedDecisionMatrix[row][col];
+                    }
+                    positiveIdealSolution[col] = max;
                 }
-                positiveIdealSolution[col]=max;
+            } else {
+
+                for(int row = 0;row<rows_alternatives;row++)
+                {
+                    if(weightedNormalizedDecisionMatrix[row][col]<max)      //Minimising first 4 parameters
+                    {
+                        max=weightedNormalizedDecisionMatrix[row][col];
+                    }
+                    positiveIdealSolution[col]=max;
+                }
             }
 
         }
@@ -96,21 +117,33 @@ public class TOPSIS
 
     public double [] calculatenegativeIdealSolution()
     {
-        negativeIdealSolution = new double[Criteria_columns];
+        negativeIdealSolution = new double[columns_criteria];
         double min = 0d;
-        for(int col = 0; col<Criteria_columns;col++)
+
+        for(int col = 0; col<columns_criteria;col++)
         {
             min = 1;
-            for(int row = 0;row<Alternatives_rows;row++)
-            {
-
-                if(weightedNormalizedDecisionMatrix[row][col]<min)
+            if (col == 4){                                      //minimise MMR
+                for(int row = 0;row<rows_alternatives;row++)
                 {
-                    min=weightedNormalizedDecisionMatrix[row][col];
-                }
-                negativeIdealSolution[col]=min;
-            }
+                    min = 500;
 
+                    if(weightedNormalizedDecisionMatrix[row][col]<min)
+                    {
+                        min=weightedNormalizedDecisionMatrix[row][col];
+                    }
+                    negativeIdealSolution[col]=min;
+                }
+            } else {
+
+                for (int row = 0; row < rows_alternatives; row++) {     //maximise eg. power consumption
+
+                    if (weightedNormalizedDecisionMatrix[row][col] > min) {
+                        min = weightedNormalizedDecisionMatrix[row][col];
+                    }
+                    negativeIdealSolution[col] = min;
+                }
+            }
         }
 
         return negativeIdealSolution;
@@ -118,17 +151,17 @@ public class TOPSIS
 
     public double []calculatePositiveSeparationFromIdeal()
     {
-        positiveSeparationFromIdeal= new double[Alternatives_rows];
-        double [] temp = new double[Alternatives_rows];
+        positiveSeparationFromIdeal= new double[rows_alternatives];
+        double [] temp = new double[rows_alternatives];
 
-        for(int i = 0; i<Alternatives_rows;i++)
+        for(int i = 0; i<rows_alternatives;i++)
         {
             temp[i]=0d;
         }
 
-        for(int row = 0; row<Alternatives_rows;row++)
+        for(int row = 0; row<rows_alternatives;row++)
         {
-            for(int col = 0;col<Criteria_columns;col++)
+            for(int col = 0;col<columns_criteria;col++)
             {
                 temp[row] = temp[row] + Math.pow((weightedNormalizedDecisionMatrix[row][col]- positiveIdealSolution[col]), 2);
 
@@ -142,16 +175,16 @@ public class TOPSIS
 
     public double [] calculateNegativeSeparationFromIdeal()
     {
-        negativeSeparationFromIdeal= new double[Alternatives_rows];
-        double [] temp = new double[Alternatives_rows];
+        negativeSeparationFromIdeal= new double[rows_alternatives];
+        double [] temp = new double[rows_alternatives];
 
-        for(int i = 0; i<Alternatives_rows;i++)
+        for(int i = 0; i<rows_alternatives;i++)
         {
             temp[i]=0d;
         }
-        for(int row = 0; row<Alternatives_rows;row++)
+        for(int row = 0; row<rows_alternatives;row++)
         {
-            for(int col = 0;col<Criteria_columns;col++)
+            for(int col = 0;col<columns_criteria;col++)
             {
                 temp[row] = temp[row] + Math.pow((weightedNormalizedDecisionMatrix[row][col]- negativeIdealSolution[col]), 2);
 
@@ -163,20 +196,21 @@ public class TOPSIS
         return negativeSeparationFromIdeal;
     }
 
-    public double [] calculateClosenessCoefficient()
+    public double [] calculateClosenessCoefficient() //similarity to the greatest distance from worst solution
     {
-        closenessCoefficient = new double[Alternatives_rows];
-        for(int i = 0; i<Alternatives_rows;i++)
+        closenessCoefficient = new double[rows_alternatives];
+        for(int i = 0; i<rows_alternatives;i++)
         {
             closenessCoefficient[i] = negativeSeparationFromIdeal[i]/(negativeSeparationFromIdeal[i] + positiveSeparationFromIdeal[i]);
         }
 
+
         return closenessCoefficient;
     }
 
-    public double [] calculateSortClosenessCoefficient()
+    public double [] calculateSortClosenessCoefficient()        //Will sort after joining table data
     {
-        sortclosenessCoefficient = new double[Alternatives_rows];
+        sortclosenessCoefficient = new double[rows_alternatives];
 
         return sortclosenessCoefficient;
     }
@@ -207,20 +241,20 @@ public class TOPSIS
 
 
 
-    public int getAlternatives_rows() {
-        return Alternatives_rows;
+    public int getrows_alternatives() {
+        return rows_alternatives;
     }
 
-    public void setAlternatives_rows(int Alternatives_rows) {
-        this.Alternatives_rows = Alternatives_rows;
+    public void setrows_alternatives(int rows_alternatives) {
+        this.rows_alternatives = rows_alternatives;
     }
 
-    public int getCriteria_columns() {
-        return Criteria_columns;
+    public int getcolumns_criteria() {
+        return columns_criteria;
     }
 
-    public void setCriteria_columns(int Criteria_columns) {
-        this.Criteria_columns = Criteria_columns;
+    public void setcolumns_criteria(int columns_criteria) {
+        this.columns_criteria = columns_criteria;
     }
 
     public double[][] getTOPSISmatrix() {
@@ -279,6 +313,9 @@ public class TOPSIS
         this.weightedNormalizedDecisionMatrix = weightedNormalizedDecisionMatrix;
     }
 
+    public double[] getNormalizedWeightingMatrix() {
+        return normalizedWeightingMatrix;
+    }
 
 }
 

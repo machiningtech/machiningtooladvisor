@@ -27,6 +27,7 @@ public class MachiningData extends Application {
 
     double [] CriteriaWeightingMatrix;
     double [] [] TOPSISmatrix;
+    double [] UnorderedToolScores;
 
 
 
@@ -108,6 +109,14 @@ public class MachiningData extends Application {
     }
     public void setTOPSISmatrix(double[][] TOPSISmatrix) {
         this.TOPSISmatrix = TOPSISmatrix;
+    }
+
+    public double[] getUnorderedToolScores() {
+        return UnorderedToolScores;
+    }
+
+    public void setUnorderedToolScores(double[] unorderedToolScores) {
+        UnorderedToolScores = unorderedToolScores;
     }
 
     @Override
