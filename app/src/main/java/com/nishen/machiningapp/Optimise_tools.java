@@ -7,6 +7,7 @@ import android.text.Html;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -36,7 +37,10 @@ public class Optimise_tools extends AppCompatActivity {
             HashMap<String, String> ToolData = filteredToolList.get(row);
             HashMap<String, String> TOPSISelement = new HashMap<>();
 
+            DecimalFormat formatter2 = new DecimalFormat("#0.00");
+
             String Name = ToolData.get("Name");
+            String Diameter = ToolData.get("Diameter");
             String Power = ToolData.get("CuttingPower");
             String Roughness = ToolData.get("Roughness");
             String Shear = ToolData.get("Shear");
@@ -49,12 +53,20 @@ public class Optimise_tools extends AppCompatActivity {
             TOPSISmatrix[row][3] = Double.parseDouble(ToolLife);    //Must minimise
             TOPSISmatrix[row][4] = Double.parseDouble(MMR);         //Must maximise
 
+            String PowerShort = formatter2.format(TOPSISmatrix[row][0]);
+            String RoughnessShort = formatter2.format(TOPSISmatrix[row][1]);
+            String ShearShort = formatter2.format(TOPSISmatrix[row][2]);
+            String ToolLifeShort = formatter2.format(TOPSISmatrix[row][3]);
+            String MMRShort = formatter2.format(TOPSISmatrix[row][4]);
+
+
             TOPSISelement.put("Name", Name);
-            TOPSISelement.put("Power", Power);
-            TOPSISelement.put("Roughness", Roughness);
-            TOPSISelement.put("Shear", Shear);
-            TOPSISelement.put("ToolLife", ToolLife);
-            TOPSISelement.put("MMR", MMR);
+            TOPSISelement.put("Diameter", Diameter);
+            TOPSISelement.put("Power", PowerShort);
+            TOPSISelement.put("Roughness", RoughnessShort);
+            TOPSISelement.put("Shear", ShearShort);
+            TOPSISelement.put("ToolLife", ToolLifeShort);
+            TOPSISelement.put("MMR", MMRShort);
 
             TOPSIS_List.add(TOPSISelement);
         }
@@ -70,11 +82,13 @@ public class Optimise_tools extends AppCompatActivity {
         double [] UnorderedToolScores = machiningTOPSIS.calculate();
 
 
-        //TODO convert closeness coefficient table into full data table to display.
+        //add closeness coefficient (score) table into tool data table.
         for (int row = 0; row < rows_alternatives; row++) {
-            HashMap<String, String> ToolData = TOPSIS_List.get(row);
+            HashMap<String, String> TOPSISelement = TOPSIS_List.get(row);
             double toolScore = UnorderedToolScores[row];
-            ToolData.put("Score", Double.toString(toolScore));
+            DecimalFormat formatter2 = new DecimalFormat("#0.00");
+            String toolScoreShort = formatter2.format(toolScore*100);
+            TOPSISelement.put("Score", toolScoreShort);
         }
 
 

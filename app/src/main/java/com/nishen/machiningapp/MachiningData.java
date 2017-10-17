@@ -22,6 +22,12 @@ public class MachiningData extends Application {
     private String OperationType;
     private String Machine;
 
+    boolean UserCutDataChecked;
+
+    private double userCutWidth;
+    private double userCutDepth;
+    private double userCuttingSpeed;
+
     private ArrayList<HashMap<String, String>> FilteredToolList;
     private ArrayList<HashMap<String, String>> ToolList;
 
@@ -81,6 +87,62 @@ public class MachiningData extends Application {
     }
     public void setCoolant(String coolant) {
         Coolant = coolant;
+    }
+
+    public String getClamping() {
+        return Clamping;
+    }
+
+    public void setClamping(String clamping) {
+        Clamping = clamping;
+    }
+
+    public String getOperationType() {
+        return OperationType;
+    }
+
+    public void setOperationType(String operationType) {
+        OperationType = operationType;
+    }
+
+    public String getMachine() {
+        return Machine;
+    }
+
+    public void setMachine(String machine) {
+        Machine = machine;
+    }
+
+    public boolean isUserCutDataChecked() {
+        return UserCutDataChecked;
+    }
+
+    public void setUserCutDataChecked(boolean userCutDataChecked) {
+        UserCutDataChecked = userCutDataChecked;
+    }
+
+    public double getUserCutWidth() {
+        return userCutWidth;
+    }
+
+    public void setUserCutWidth(double userCutWidth) {
+        this.userCutWidth = userCutWidth;
+    }
+
+    public double getUserCutDepth() {
+        return userCutDepth;
+    }
+
+    public void setUserCutDepth(double userCutDepth) {
+        this.userCutDepth = userCutDepth;
+    }
+
+    public double getUserCuttingSpeed() {
+        return userCuttingSpeed;
+    }
+
+    public void setUserCuttingSpeed(double userCuttingSpeed) {
+        this.userCuttingSpeed = userCuttingSpeed;
     }
 
     public ArrayList<HashMap<String, String>> getFilteredToolList() {

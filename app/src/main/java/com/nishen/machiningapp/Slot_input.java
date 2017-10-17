@@ -11,8 +11,10 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -24,11 +26,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
@@ -44,6 +48,7 @@ import java.util.List;
 import android.widget.ArrayAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.nishen.machiningapp.R.id.material_spinner;
 import static com.nishen.machiningapp.R.id.parent;
@@ -71,8 +76,11 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     Spinner operation_type_spinner;
     Spinner machine_spinner;
     Spinner clamping_spinner;
-    Switch user_cutdata_input;
+    Switch user_cutdata_switch;
     TextView user_cutdata_input_edit;
+    //String UserCutWidth;
+    //String UserCutDepth;
+    //String UserCuttingSpeed;
 
 
     @Override
@@ -84,7 +92,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         //cnr_radius_list = new ArrayList<>();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        //TODO add popupwindow instantiator. create layout for fragments.
+
 /**  Function to load the materials spinner data from SQLite database
         material_spinner = (Spinner)findViewById(R.id.material_spinner);
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
@@ -201,15 +209,25 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         //TODO utilise clamping value
 
         user_cutdata_input_edit = (TextView) findViewById(R.id.EditUserCutData);
-        user_cutdata_input = (Switch) findViewById(R.id.UserCutDataSwitch);
-        user_cutdata_input.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        user_cutdata_input_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserCutdataWindow(true);
+
+
+
+
+            }
+        });
+        user_cutdata_switch = (Switch) findViewById(R.id.UserCutDataSwitch);
+        user_cutdata_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    user_cutdata_input_edit.setTextColor(R.color.colorPrimary);
-                    UserCutdataWindow();
+                    user_cutdata_input_edit.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    UserCutdataWindow(false);
                 } else {
-                    user_cutdata_input_edit.setTextColor(android.R.color.black);
+                    user_cutdata_input_edit.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 }
             }
         });
@@ -226,21 +244,70 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
 
 
-    public void UserCutdataWindow(){
+    public void UserCutdataWindow(boolean Edit){
         try {
             // get a reference to the already created main layout
-            ScrollView mainLayout = (ScrollView) findViewById(R.id.container);
+            final ScrollView mainLayout = (ScrollView) findViewById(R.id.container);
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View popupView = inflater.inflate(R.layout.fragment_user_cutdata_input, null);
+            final View popupView = inflater.inflate(R.layout.user_cutdata_popup, null);
 
             // create the popup window
-            boolean focusable = true; // lets taps outside the popup also dismiss it
-            final PopupWindow popupWindow = new PopupWindow(popupView, 300, 300, focusable);
+            //boolean focusable = false; // lets taps outside the popup also dismiss it
+            final PopupWindow popupWindow = new PopupWindow(popupView, 1, 1, true);
+            popupWindow.setWidth(850);
+            popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
             // show the popup window
-            popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+            popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 250);
+
+            final EditText CutWidth = (EditText)popupView.findViewById(R.id.userCutWidthPerPass);
+            final EditText CutDepth = (EditText)popupView.findViewById(R.id.userCutDepthPerPass);
+            final EditText CuttingSpeed = (EditText)popupView.findViewById(R.id.userCuttingSpeed);
+
+            /**if (Edit && !UserCutWidth.trim().equals("") && !UserCutDepth.trim().equals("") && UserCuttingSpeed.trim().equals("")){
+                CutWidth.setText(UserCutWidth);
+                CutDepth.setText(UserCutDepth);
+                CuttingSpeed.setText(UserCuttingSpeed);
+            }*/
+
+            //UserCutWidth = CutWidth.getText().toString();
+            //UserCutDepth = CutDepth.getText().toString();
+            //UserCuttingSpeed = CuttingSpeed.getText().toString();
+            Button Done = (Button)popupView.findViewById(R.id.userCutDataDone);
+            Done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (CutWidth.getText().toString().trim().equals("") | CutDepth.getText().toString().trim().equals("") | CuttingSpeed.getText().toString().trim().equals("") ) {
+
+                        Toast.makeText(getApplicationContext(), "Please fill in the details", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        ((MachiningData) getApplicationContext()).setUserCutWidth(Double.parseDouble(CutWidth.getText().toString()));
+                        ((MachiningData) getApplicationContext()).setUserCutDepth(Double.parseDouble(CutDepth.getText().toString()));
+                        ((MachiningData) getApplicationContext()).setUserCuttingSpeed(Double.parseDouble(CuttingSpeed.getText().toString()));
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(popupView.getWindowToken(), 0);
+                        popupWindow.dismiss();
+                    }
+                }
+            });
+
+            Button Back = (Button)popupView.findViewById(R.id.userCutDataBack);
+            Back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(popupView.getWindowToken(), 0);
+
+                    popupWindow.dismiss();
+                    user_cutdata_switch.toggle();
+
+
+                }
+            });
 
             // dismiss the popup window when touched
             //popupView.setOnTouchListener(new View.OnTouchListener() {
@@ -283,6 +350,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         EditText CutDepth = (EditText)findViewById(R.id.cut_depth);
         String cut_depth = CutDepth.getText().toString();
         ((MachiningData)getApplicationContext()).setCutDepth(cut_depth);
+
+        ((MachiningData)getApplicationContext()).setUserCutDataChecked(user_cutdata_switch.isChecked());
 
 
         startActivity(filter_tools);

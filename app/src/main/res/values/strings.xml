@@ -5,7 +5,7 @@
     <string name="side_milling">Side Milling</string>
     <string name="ramping">Ramping</string>
     <string name="profile_question">Choose the cut profile:</string>
-    <string name="input_details">Input Details:</string>
+    <string name="input_details">Input Details</string>
     <string name="material">Material:</string>
     <string name="length_of_cut">Length of cut:</string>
     <string name="width_of_cut">Width of cut:</string>

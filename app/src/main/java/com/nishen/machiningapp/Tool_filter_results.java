@@ -143,11 +143,30 @@ public class Tool_filter_results extends AppCompatActivity {
             //Material removal rate calculations
             double diameter = Double.parseDouble(Diameter);
             double ApDc = Double.parseDouble(Ap_Dc);
-            double CutDepth = ApDc * diameter ;
-            double AeDc = Double.parseDouble(Ae_Dc);
-            double CutWidth = AeDc * diameter ;
 
-            double Vc = Double.parseDouble(Cutting_speed);
+            double CutDepth;
+            if (((MachiningData)getApplicationContext()).isUserCutDataChecked()){
+                CutDepth = ((MachiningData)getApplicationContext()).getUserCutDepth();
+            } else {
+                CutDepth = ApDc * diameter ;
+            }
+
+            double AeDc = Double.parseDouble(Ae_Dc);
+
+            double CutWidth;
+            if (((MachiningData)getApplicationContext()).isUserCutDataChecked()){
+                CutWidth = ((MachiningData)getApplicationContext()).getUserCutWidth();
+            } else {
+                CutWidth = AeDc * diameter ;
+            }
+
+            double Vc;
+            if (((MachiningData)getApplicationContext()).isUserCutDataChecked()){
+                Vc = ((MachiningData)getApplicationContext()).getUserCuttingSpeed();
+            } else {
+                Vc = Double.parseDouble(Cutting_speed);
+            }
+
             double SpindleSpeed = Vc / (pi * diameter);
             double Fz = Double.parseDouble(Feed_per_tooth);
             double zn = Double.parseDouble(FluteNumber);
@@ -156,6 +175,7 @@ public class Tool_filter_results extends AppCompatActivity {
             double MMR = CutDepth * CutWidth * FeedVelocity; // Q
             //Material removal rate calculations
 
+            String CuttingSpeed = formatter2.format(Vc);
             String Cut_depth = formatter1.format(CutDepth);
             String Cut_width = Double.toString(CutWidth);
             //String Material_removal_rate = Double.toString(MMR);
@@ -259,7 +279,7 @@ public class Tool_filter_results extends AppCompatActivity {
             tool.put("CutDepth", Cut_depth);
             tool.put("CutWidth", Cut_width);
             tool.put("Fz", Feed_per_tooth);
-            tool.put("CuttingSpeed", Cutting_speed);
+            tool.put("CuttingSpeed", CuttingSpeed);
 
             tool.put("CuttingPower", Cutting_power);
             tool.put("Roughness", Surface_roughness);
