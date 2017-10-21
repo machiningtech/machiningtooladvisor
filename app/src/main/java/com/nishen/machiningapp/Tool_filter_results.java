@@ -1,13 +1,22 @@
 package com.nishen.machiningapp;
 
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -306,6 +315,14 @@ public class Tool_filter_results extends AppCompatActivity {
 
 /** Populating Tool results listview **/
 
+        ImageButton OptimiseInfoButton = (ImageButton)findViewById(R.id.optimiseInfoButton);
+        OptimiseInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OptimiseInfoWindow();
+            }
+        });
+
 
 
 
@@ -316,6 +333,54 @@ public class Tool_filter_results extends AppCompatActivity {
         ((MachiningData)getApplicationContext()).setFilteredToolList(filteredTools);
 
     } //onCreate
+
+
+    public void OptimiseInfoWindow(){
+        try {
+            // get a reference to the already created main layout
+            final ScrollView mainLayout = (ScrollView) findViewById(R.id.container);
+
+            // inflate the layout of the popup window
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            final View popupView = inflater.inflate(R.layout.optimise_info_popup, null);
+
+            // create the popup window
+            //boolean focusable = true; // lets taps outside the popup also dismiss it
+            final PopupWindow popupWindow = new PopupWindow(popupView, 1, 1, true);
+            popupWindow.setWidth(900);
+            popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+            // show the popup window
+            popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
+
+            // TextView has links specified by putting <a> tags in the string
+            // resource.  By default these links will appear but not
+            // respond to user input.  To make them active, you need to
+            // call setMovementMethod() on the TextView object.
+
+            TextView OptimiseInfoText = (TextView)popupView.findViewById(R.id.OptimiseInfoText);
+            OptimiseInfoText.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+
+            }
+
+            // dismiss the popup window when touched
+            //popupView.setOnTouchListener(new View.OnTouchListener() {
+            //   @Override
+            //   public boolean onTouch(View v, MotionEvent event) {
+            //       popupWindow.dismiss();
+            //       return true;
+            //  }
+            // });
+
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public void OptimiseTools(View view) {

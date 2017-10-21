@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="6dp"
-        android:textColor="@android:color/black"
+        android:textColor="@color/machining_dark_gray"
         android:textSize="16sp" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:padding="6dp"
-        android:textColor="@android:color/black"
+        android:textColor="@color/machining_dark_gray"
         android:textSize="16sp" />
 
 </LinearLayout>

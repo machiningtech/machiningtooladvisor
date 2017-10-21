@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,10 +18,10 @@
             android:layout_height="240dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-
             android:layout_marginTop="8dp"
             android:paddingLeft="15dp"
             android:paddingRight="20dp"
+            android:scrollbarThumbHorizontal="@color/colorPrimary"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -41,6 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="165dp"
                     android:nestedScrollingEnabled="true"
+                    android:scrollbarThumbVertical="@color/colorPrimary"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView12">
@@ -85,6 +87,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:text="@string/power_consumption"
+            android:textColor="@color/machining_dark_gray"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -97,6 +100,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:text="@string/surface_roughness"
+            android:textColor="@color/machining_dark_gray"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -109,6 +113,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:text="@string/shear_plane_deformation"
+            android:textColor="@color/machining_dark_gray"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -121,6 +126,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:text="@string/tool_life"
+            android:textColor="@color/machining_dark_gray"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -133,6 +139,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:text="@string/material_removal_rate"
+            android:textColor="@color/machining_dark_gray"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -147,6 +154,7 @@
             android:layout_marginTop="8dp"
             android:max="4"
             android:progress="2"
+            android:progressTint="@color/colorPrimary"
             android:scaleX="1.2"
             android:scaleY="1.2"
             app:layout_constraintRight_toRightOf="parent"
@@ -162,6 +170,7 @@
             android:layout_marginTop="8dp"
             android:max="4"
             android:progress="2"
+            android:progressTint="@color/colorPrimary"
             android:scaleX="1.2"
             android:scaleY="1.2"
             app:layout_constraintRight_toRightOf="parent"
@@ -177,6 +186,7 @@
             android:layout_marginTop="8dp"
             android:max="4"
             android:progress="2"
+            android:progressTint="@color/colorPrimary"
             android:scaleX="1.2"
             android:scaleY="1.2"
             app:layout_constraintRight_toRightOf="parent"
@@ -192,6 +202,7 @@
             android:layout_marginTop="8dp"
             android:max="4"
             android:progress="2"
+            android:progressTint="@color/colorPrimary"
             android:scaleX="1.2"
             android:scaleY="1.2"
             app:layout_constraintRight_toRightOf="parent"
@@ -206,6 +217,7 @@
             android:layout_marginRight="16dp"
             android:max="4"
             android:progress="2"
+            android:progressTint="@color/colorPrimary"
             android:scaleX="1.2"
             android:scaleY="1.2"
             app:layout_constraintRight_toRightOf="parent"
@@ -231,21 +243,21 @@
             android:id="@+id/testview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintTop_toTopOf="@+id/button4"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button4" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/optimiseInfoButton"
             android:layout_width="15dp"
             android:layout_height="25dp"
+            android:layout_marginRight="32dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/infobutton"
-            app:layout_constraintTop_toTopOf="@+id/textView13"
-            android:layout_marginRight="32dp"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView13" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

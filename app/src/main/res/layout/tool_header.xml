@@ -15,7 +15,8 @@ android:layout_height="wrap_content"
         android:text="@string/family_name"
         android:layout_marginStart="8dp"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray"/>
 
     <TextView
         android:id="@+id/Diameter_header"
@@ -25,7 +26,8 @@ android:layout_height="wrap_content"
         android:text="@string/tool_diameter_mm"
         android:layout_marginStart="8dp"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
 
     <TextView
         android:id="@+id/CuttingLength_header"
@@ -35,7 +37,8 @@ android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/tool_cutting_length"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
 
     <TextView
         android:id="@+id/FluteNumber_header"
@@ -45,7 +48,8 @@ android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/tool_flute_number"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
 
     <TextView
         android:id="@+id/CutDepthPerPass_header"
@@ -55,7 +59,8 @@ android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/tool_depth_per_pass"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
 
     <TextView
         android:id="@+id/CutWidthPerPass_header"
@@ -65,7 +70,8 @@ android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/tool_width_per_pass"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
 
     <TextView
         android:id="@+id/CuttingSpeed_header"
@@ -75,7 +81,8 @@ android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/cutting_speed_m_min"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
 
     <TextView
         android:id="@+id/CuttingPower_header"
@@ -85,7 +92,8 @@ android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/cutting_power_kw"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
 
     <TextView
         android:id="@+id/MMR_header"
@@ -95,7 +103,8 @@ android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/material_removal_rate_mm3_min"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
 
 
 </LinearLayout>

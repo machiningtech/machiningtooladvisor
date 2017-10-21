@@ -5,14 +5,15 @@
     android:id="@+id/user_cutdata_frame"
     android:layout_width="320dp"
     android:layout_height="190dp"
+    android:background="@color/machining_dark_gray"
     android:elevation="5dp"
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="0dp"
-        android:background="@android:drawable/editbox_dropdown_light_frame">
+        android:layout_margin="2dp"
+        android:background="@android:color/background_light">
 
         <TextView
             android:id="@+id/textView25"
@@ -21,6 +22,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:text="Cut width per pass"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,23 +43,23 @@
             android:id="@+id/textView29"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="2dp"
             android:text="mm"
             android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="@+id/textView27"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="@+id/textView23" />
+            app:layout_constraintLeft_toLeftOf="@+id/textView23"
+            app:layout_constraintTop_toTopOf="@+id/textView27" />
 
         <TextView
             android:id="@+id/textView28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="2dp"
             android:text="mm"
             android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="@+id/textView25"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="@+id/textView23" />
+            app:layout_constraintLeft_toLeftOf="@+id/textView23"
+            app:layout_constraintTop_toTopOf="@+id/textView25" />
 
         <TextView
             android:id="@+id/textView27"
@@ -66,6 +68,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Cut depth per pass"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView25"
@@ -78,6 +81,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Cutting speed"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView27"

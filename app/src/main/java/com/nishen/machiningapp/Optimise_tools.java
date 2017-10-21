@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class Optimise_tools extends AppCompatActivity {
     ArrayList<HashMap<String, String>> filteredToolList;
-
+    ArrayList<HashMap<String, String>> TOPSIS_List;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class Optimise_tools extends AppCompatActivity {
         int rows_alternatives = filteredToolList.size();
         int columns_criteria = 5;
 
-        ArrayList<HashMap<String, String>> TOPSIS_List = new ArrayList<>();
+        TOPSIS_List = new ArrayList<>();
         double [] [] TOPSISmatrix = new double[rows_alternatives][columns_criteria];
 
         for (int row = 0; row < rows_alternatives; row++) {
@@ -92,6 +94,9 @@ public class Optimise_tools extends AppCompatActivity {
         }
 
 
+        Collections.sort(TOPSIS_List, new ToolScoreComparator());
+
+
 
 
         ListView testV = (ListView) findViewById(R.id.testList);
@@ -103,6 +108,17 @@ public class Optimise_tools extends AppCompatActivity {
 
     } //onCreate
 
+
+    public class ToolScoreComparator
+            implements Comparator<HashMap<String, String>>
+    {
+        @Override
+        public int compare(HashMap<String, String> Tool1,
+                           HashMap<String, String> Tool2)
+        {
+            return Double.compare(Double.parseDouble(Tool2.get("Score")), Double.parseDouble(Tool1.get("Score"))); //Tool2 compared to Tool1 so that sorting is in descending order.
+        }
+    }   //TODO sort out the comparing. String/double???
 
 
 

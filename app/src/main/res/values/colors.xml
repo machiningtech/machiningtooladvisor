@@ -10,4 +10,6 @@
     <color name="primary_dark_material_dark">#000000</color>
     <color name="machining_dark">#0069a8</color>
     <color name="machining_status">#006da8</color>
+    <color name="machining_dark_gray">#616161</color>
+    <color name="popupbackground">#aa000000</color>
 </resources>

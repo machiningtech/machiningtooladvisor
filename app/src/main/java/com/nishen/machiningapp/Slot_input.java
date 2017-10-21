@@ -133,7 +133,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         cnr_radius_spinner.setAdapter(cnr_radius_adapter);
 
         //Corner radius dropdown spinner
-
+        cnr_radius_spinner.setOnItemSelectedListener(new cornerRadiusSpinnerListener());
 
 // Zoomable image buttons
         final View slot_length_view = findViewById(R.id.slot_length_imagebutton);
@@ -179,6 +179,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         coolant_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         coolant_spinner.setAdapter(coolant_adapter);
 
+        coolant_spinner.setOnItemSelectedListener(new coolantSpinnerListener());
+
         operation_type_spinner = (Spinner)findViewById(R.id.operation_type_spinner);
         String[] operationTypeArray = getResources().getStringArray(R.array.operation_type_list);
         ArrayList<String> operationType_list = new ArrayList<String>(Arrays.asList(operationTypeArray));
@@ -188,6 +190,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         operation_type_spinner.setSelection(1);
         //TODO utilise operation type to filter tools (no explicit argument)
 
+        operation_type_spinner.setOnItemSelectedListener(new operationTypeSpinnerListener());
 
         machine_spinner = (Spinner) findViewById(R.id.machine_spinner);
         DatabaseAccess machine_db = DatabaseAccess.getInstance(this);
@@ -199,6 +202,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         machine_db.close();
         //TODO utilise machine power to limit tool selection
 
+        material_spinner.setOnItemSelectedListener(new machineSpinnerListener());
+
         clamping_spinner = (Spinner)findViewById(R.id.clamping_spinner);
         String[] clampingArray = getResources().getStringArray(R.array.clamping_list);
         ArrayList<String> clamping_list = new ArrayList<String>(Arrays.asList(clampingArray));
@@ -207,6 +212,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         clamping_spinner.setAdapter(clampingAdapter);
         clamping_spinner.setSelection(1);
         //TODO utilise clamping value
+
+        clamping_spinner.setOnItemSelectedListener(new clampingSpinnerListener());
 
         user_cutdata_input_edit = (TextView) findViewById(R.id.EditUserCutData);
         user_cutdata_input_edit.setOnClickListener(new View.OnClickListener() {
@@ -509,7 +516,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     }
 
-    public class materialSpinnerListener implements OnItemSelectedListener {
+    private class materialSpinnerListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String selectedMaterial = new String();
             selectedMaterial = String.valueOf(pos + 1);
@@ -521,7 +528,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         }
     }
 
-    public class cornerRadiusSpinnerListener implements OnItemSelectedListener {
+    private class cornerRadiusSpinnerListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String selectedCornerRadius = new String();
             selectedCornerRadius = parent.getItemAtPosition(pos).toString();
@@ -532,7 +539,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         }
     }
 
-    public class coolantSpinnerListener implements OnItemSelectedListener {
+    private class coolantSpinnerListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             String selectedCoolant = new String();
             selectedCoolant = parent.getItemAtPosition(pos).toString();
@@ -543,6 +550,38 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         }
     }
 
+    private class clampingSpinnerListener implements OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            String selectedClamping = new String();
+            selectedClamping = parent.getItemAtPosition(pos).toString();
+            ((MachiningData)getApplicationContext()).setClamping(selectedClamping);
+        }
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
+    }
+
+    private class operationTypeSpinnerListener implements OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            String selectedOperationType = new String();
+            selectedOperationType = parent.getItemAtPosition(pos).toString();
+            ((MachiningData)getApplicationContext()).setOperationType(selectedOperationType);
+        }
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
+    }
+
+    private class machineSpinnerListener implements OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            String selectedMachine = new String();
+            selectedMachine = parent.getItemAtPosition(pos).toString();
+            ((MachiningData)getApplicationContext()).setMachine(selectedMachine);
+        }
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
+    }
 
     private class SlotInputAsyncTask extends AsyncTask<Void, Void, Void> {
 
