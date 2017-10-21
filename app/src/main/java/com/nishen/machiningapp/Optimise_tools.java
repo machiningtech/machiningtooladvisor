@@ -1,9 +1,13 @@
 package com.nishen.machiningapp;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,7 +19,12 @@ import java.util.HashMap;
 
 public class Optimise_tools extends AppCompatActivity {
     ArrayList<HashMap<String, String>> filteredToolList;
-    ArrayList<HashMap<String, String>> TOPSIS_List;
+    TextView Diameter_header;
+    TextView CutDepthPerPass_header;
+    TextView CutWidthPerPass_header;
+    TextView CuttingSpeed_header;
+    TextView CuttingPower_header;
+    TextView MMR_header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +32,27 @@ public class Optimise_tools extends AppCompatActivity {
         setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot<big>&#8658</big>Tools<big>&#8658</big>Optimise"));
         setContentView(R.layout.activity_optimise_tools);
 
-        String mat = ((MachiningData)getApplicationContext()).getSelectedMaterial();
+
+        //Format header columns
+        Diameter_header = (TextView) findViewById(R.id.Diameter_header);
+        Diameter_header.setText(Html.fromHtml("Tool Diameter <small><b><em>mm</em></b></small>"));
+
+        CutDepthPerPass_header = (TextView) findViewById(R.id.CutDepthPerPass_header);
+        CutDepthPerPass_header.setText(Html.fromHtml("Cut depth per pass <small><b><em>mm</em></b></small>"));
+
+        CutWidthPerPass_header = (TextView) findViewById(R.id.CutWidthPerPass_header);
+        CutWidthPerPass_header.setText(Html.fromHtml("Cut width per pass <small><b><em>mm</em></b></small>"));
+
+        CuttingSpeed_header = (TextView) findViewById(R.id.CuttingSpeed_header);
+        CuttingSpeed_header.setText(Html.fromHtml("Cutting Speed <small><b><em>m/min</em></b></small>"));
+
+        CuttingPower_header = (TextView) findViewById(R.id.CuttingPower_header);
+        CuttingPower_header.setText(Html.fromHtml("Cutting Power <small><b><em>kW</em></b></small"));
+
+        MMR_header = (TextView) findViewById(R.id.MMR_header);
+        MMR_header.setText(Html.fromHtml("Material Removal Rate <small><b><em>mm<sup><small>3</small></sup>/min</em></b></small>"));
+
+//Format header columns
 
        //new MachiningTOPSIS().execute();
 
@@ -32,7 +61,7 @@ public class Optimise_tools extends AppCompatActivity {
         int rows_alternatives = filteredToolList.size();
         int columns_criteria = 5;
 
-        TOPSIS_List = new ArrayList<>();
+        //TOPSIS_List = new ArrayList<>();
         double [] [] TOPSISmatrix = new double[rows_alternatives][columns_criteria];
 
         for (int row = 0; row < rows_alternatives; row++) {
@@ -55,22 +84,6 @@ public class Optimise_tools extends AppCompatActivity {
             TOPSISmatrix[row][3] = Double.parseDouble(ToolLife);    //Must minimise
             TOPSISmatrix[row][4] = Double.parseDouble(MMR);         //Must maximise
 
-            String PowerShort = formatter2.format(TOPSISmatrix[row][0]);
-            String RoughnessShort = formatter2.format(TOPSISmatrix[row][1]);
-            String ShearShort = formatter2.format(TOPSISmatrix[row][2]);
-            String ToolLifeShort = formatter2.format(TOPSISmatrix[row][3]);
-            String MMRShort = formatter2.format(TOPSISmatrix[row][4]);
-
-
-            TOPSISelement.put("Name", Name);
-            TOPSISelement.put("Diameter", Diameter);
-            TOPSISelement.put("Power", PowerShort);
-            TOPSISelement.put("Roughness", RoughnessShort);
-            TOPSISelement.put("Shear", ShearShort);
-            TOPSISelement.put("ToolLife", ToolLifeShort);
-            TOPSISelement.put("MMR", MMRShort);
-
-            TOPSIS_List.add(TOPSISelement);
         }
 
 
@@ -86,7 +99,7 @@ public class Optimise_tools extends AppCompatActivity {
 
         //add closeness coefficient (score) table into tool data table.
         for (int row = 0; row < rows_alternatives; row++) {
-            HashMap<String, String> TOPSISelement = TOPSIS_List.get(row);
+            HashMap<String, String> TOPSISelement = filteredToolList.get(row);
             double toolScore = UnorderedToolScores[row];
             DecimalFormat formatter2 = new DecimalFormat("#0.00");
             String toolScoreShort = formatter2.format(toolScore*100);
@@ -94,16 +107,39 @@ public class Optimise_tools extends AppCompatActivity {
         }
 
 
-        Collections.sort(TOPSIS_List, new ToolScoreComparator());
+        Collections.sort(filteredToolList, new ToolScoreComparator());
+
+        ArrayList<HashMap<String, String>> Top5Tools = new ArrayList<>();
+
+        for (int position = 0; position < 5; position++){
+            Top5Tools.add(filteredToolList.get(position));
+        }
 
 
 
-
-        ListView testV = (ListView) findViewById(R.id.testList);
-        testArrayAdapter adapter = new testArrayAdapter(this,TOPSIS_List);
-        testV.setAdapter(adapter);
+        ListView OptimisedToolList = (ListView) findViewById(R.id.OptimisedToolList);
+        OptimisedToolsAdapter adapter = new OptimisedToolsAdapter(this,Top5Tools);
+        OptimisedToolList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+        final ImageView ToolDiagram = (ImageView)findViewById(R.id.OptimiseToolDiagramView);
+
+        OptimisedToolList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String FamilyName = filteredToolList.get(position).get("Name");
+                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+                databaseAccess.open();
+                Bitmap ToolDiagramBitmap = databaseAccess.getToolDiagram(FamilyName);
+                databaseAccess.close();
+                ToolDiagram.setImageBitmap(ToolDiagramBitmap);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
     } //onCreate
@@ -120,86 +156,6 @@ public class Optimise_tools extends AppCompatActivity {
         }
     }   //TODO sort out the comparing. String/double???
 
-
-
-
-    /**private class MachiningTOPSIS extends AsyncTask<Void, Void, Void> {
-
-        //@Override
-        //protected void onPreExecute() {}
-
-        @Override
-        protected Void doInBackground(Void...arg0) {
-
-
-            ArrayList<HashMap<String, String>> filteredToolList = ((MachiningData)getApplicationContext()).getFilteredToolList();
-            double [] CriteriaWeightingMatrix = ((MachiningData)getApplicationContext()).getCriteriaWeightingMatrix();;
-            int rows_alternatives = filteredToolList.size();
-            int columns_criteria = 5;
-
-            ArrayList<HashMap<String, String>> TOPSIS_List = new ArrayList<>();
-            double [] [] TOPSISmatrix = new double[rows_alternatives][columns_criteria];
-
-            for (int row = 0; row < rows_alternatives; row++) {
-                HashMap<String, String> ToolData = filteredToolList.get(row);
-                HashMap<String, String> TOPSISelement = new HashMap<>();
-
-                String Name = ToolData.get("Name");
-                String Power = ToolData.get("CuttingPower");
-                String Roughness = ToolData.get("Roughness");
-                String Shear = ToolData.get("Shear");
-                String ToolLife = ToolData.get("ToolLife");
-                String MMR = ToolData.get("MMR");
-
-                TOPSISmatrix[row][0] = Double.parseDouble(Power);
-                TOPSISmatrix[row][1] = Double.parseDouble(Roughness);
-                TOPSISmatrix[row][2] = Double.parseDouble(Shear);
-                TOPSISmatrix[row][3] = Double.parseDouble(ToolLife);
-                TOPSISmatrix[row][4] = Double.parseDouble(MMR);
-
-                TOPSISelement.put(Name, Name);
-                TOPSISelement.put(Power, Power);
-                TOPSISelement.put(Roughness, Roughness);
-                TOPSISelement.put(Shear, Shear);
-                TOPSISelement.put(ToolLife, ToolLife);
-                TOPSISelement.put(MMR, MMR);
-
-            }
-
-
-
-
-            TOPSIS machiningTOPSIS = new TOPSIS();
-            machiningTOPSIS.setrows_alternatives(rows_alternatives);
-            machiningTOPSIS.setcolumns_criteria(columns_criteria);
-            machiningTOPSIS.setTOPSISmatrix(TOPSISmatrix);
-            machiningTOPSIS.setCriteriaWeightingMatrix(CriteriaWeightingMatrix);
-            machiningTOPSIS.calculate();
-
-
-
-
-            return null;
-        }
-
-        //@Override
-        //protected void onProgressUpdate() {}
-
-        @Override
-        protected void onPostExecute(Void result) {
-
-            double [] [] bigmatrix = ((MachiningData)getApplicationContext()).getTOPSISmatrix();
-
-
-            ListView testV = (ListView) findViewById(R.id.testList);
-            testArrayAdapter adapter = new testArrayAdapter(Optimise_tools.this,bigmatrix);
-            testV.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-
-
-
-        }
-    }*/
 
 
 

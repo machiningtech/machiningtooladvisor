@@ -8,6 +8,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +145,12 @@ public class DatabaseAccess {
 
     public void deleteMachine (String position){
         database.rawQuery("DELETE FROM Machine WHERE id = " + position, null);
+    }
+
+    public Bitmap getToolDiagram(String FamilyName) {
+        Cursor cursor = database.rawQuery("SELECT Picture FROM Tool_pictures WHERE Name ='" + FamilyName +"'", null);
+        byte [] imageByteStream = cursor.getBlob(0);
+        return BitmapFactory.decodeByteArray(imageByteStream, 0, imageByteStream.length);
     }
 
 

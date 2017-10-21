@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="horizontal"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+    android:weightSum="1"
+>
+
+    <TextView
+        android:id="@+id/Position_header"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="#"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray"/>
+
+    <TextView
+        android:id="@+id/Name_header"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="@string/family_name"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray"/>
+
+    <TextView
+        android:id="@+id/Diameter_header"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="@string/tool_diameter_mm"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
+
+    <TextView
+        android:id="@+id/Score_header"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="Score"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
+
+    <TextView
+        android:id="@+id/CutWidthPerPass_header"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/tool_width_per_pass"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
+
+    <TextView
+        android:id="@+id/CutDepthPerPass_header"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/tool_depth_per_pass"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
+
+
+    <TextView
+        android:id="@+id/CuttingSpeed_header"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/cutting_speed_m_min"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
+
+    <TextView
+        android:id="@+id/CuttingPower_header"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/cutting_power_kw"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
+
+    <TextView
+        android:id="@+id/MMR_header"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/material_removal_rate_mm3_min"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
+
+
+</LinearLayout>

@@ -145,8 +145,7 @@ public class Tool_filter_results extends AppCompatActivity {
                 Feed_per_tooth = Fz12;
             }
             //Assign feed/tooth (mm) based on Diameter
-            DecimalFormat formatter1 = new DecimalFormat("#0.0");
-            DecimalFormat formatter2 = new DecimalFormat("#0.00");
+
             double pi = Math.PI;
 
             //Material removal rate calculations
@@ -184,20 +183,20 @@ public class Tool_filter_results extends AppCompatActivity {
             double MMR = CutDepth * CutWidth * FeedVelocity; // Q
             //Material removal rate calculations
 
-            String CuttingSpeed = formatter2.format(Vc);
-            String Cut_depth = formatter1.format(CutDepth);
+            String CuttingSpeed = Double.toString(Vc);
+            String Cut_depth = Double.toString(CutDepth);
             String Cut_width = Double.toString(CutWidth);
             //String Material_removal_rate = Double.toString(MMR);
 
 
-            String Material_removal_rate = formatter1.format(MMR);
+            String Material_removal_rate = Double.toString(MMR);
 
             //Cutting power calculations
             double SpecificCuttingEnergy = Double.parseDouble(kc); // Ks
             double CuttingPower = MMR * SpecificCuttingEnergy;
             //Cutting power calculations
 
-            String Cutting_power = formatter2.format(CuttingPower / (60 * 1000)); //kW formatting
+            String Cutting_power = Double.toString(CuttingPower / (60 * 1000)); //kW formatting
 
             //Cutting force calculations
 
@@ -289,7 +288,6 @@ public class Tool_filter_results extends AppCompatActivity {
             tool.put("CutWidth", Cut_width);
             tool.put("Fz", Feed_per_tooth);
             tool.put("CuttingSpeed", CuttingSpeed);
-
             tool.put("CuttingPower", Cutting_power);
             tool.put("Roughness", Surface_roughness);
             tool.put("Shear", Shear_strain);

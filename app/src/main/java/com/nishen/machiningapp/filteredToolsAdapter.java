@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,40 +59,33 @@ public class filteredToolsAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
 
 
-            /* Non-viewholder implementation.
-            Name = (TextView) convertView.findViewById(R.id.Name);
-            Diameter = (TextView) convertView.findViewById(R.id.Diameter);
-            CuttingLength = (TextView) convertView.findViewById(R.id.CuttingLength);
-            FluteNumber = (TextView) convertView.findViewById(R.id.FluteNumber);
-            CutDepthPerPass = (TextView) convertView.findViewById(R.id.CutDepthPerPass);
-            CutWidthPerPass = (TextView) convertView.findViewById(R.id.CutWidthPerPass);
-            MaterialRemovalRate = (TextView) convertView.findViewById(R.id.MMR);
-            CuttingSpeed = (TextView) convertView.findViewById(R.id.CuttingSpeed);*/
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
     //grab temporary tool item from arraylist of filtered tools
         HashMap<String, String> map = myToolsList.get(position);
 
-        /* Non-viewholder implementation
-        Name.setText(map.get("Name"));
-        Diameter.setText(map.get("Diameter"));
-        CuttingLength.setText(map.get("CuttingLength"));
-        FluteNumber.setText(map.get("FluteNumber"));
-        CutDepthPerPass.setText(map.get("CutDepth"));
-        CutWidthPerPass.setText(map.get("CutWidth"));
-        MaterialRemovalRate.setText(map.get("MMR"));
-        CuttingSpeed.setText(map.get("CuttingSpeed")); */
+
+        DecimalFormat formatter0 = new DecimalFormat("#0");
+        DecimalFormat formatter1 = new DecimalFormat("#0.0");
+        DecimalFormat formatter2 = new DecimalFormat("#0.00");
+
+        double CuttingSpeed = Double.parseDouble(map.get("CuttingSpeed"));
+        double CutDepth = Double.parseDouble(map.get("CutDepth"));
+        double MMR = Double.parseDouble(map.get("MMR"));
+        double CuttingPower = Double.parseDouble(map.get("CuttingPower"));
+
+
 
         viewHolder.Name.setText(map.get("Name"));
         viewHolder.Diameter.setText(map.get("Diameter"));
         viewHolder.CuttingLength.setText(map.get("CuttingLength"));
         viewHolder.FluteNumber.setText(map.get("FluteNumber"));
-        viewHolder.CutDepthPerPass.setText(map.get("CutDepth"));
+        viewHolder.CutDepthPerPass.setText(formatter1.format(CutDepth));
         viewHolder.CutWidthPerPass.setText(map.get("CutWidth"));
-        viewHolder.MaterialRemovalRate.setText(map.get("MMR"));
-        viewHolder.CuttingSpeed.setText(map.get("CuttingSpeed"));
-        viewHolder.CuttingPower.setText(map.get("CuttingPower"));
+        viewHolder.MaterialRemovalRate.setText(formatter1.format(MMR));
+        viewHolder.CuttingSpeed.setText(formatter0.format(CuttingSpeed));
+        viewHolder.CuttingPower.setText(formatter2.format(CuttingPower));
 
         return convertView;
     }

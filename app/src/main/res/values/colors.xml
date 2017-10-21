@@ -11,5 +11,6 @@
     <color name="machining_dark">#0069a8</color>
     <color name="machining_status">#006da8</color>
     <color name="machining_dark_gray">#616161</color>
-    <color name="popupbackground">#aa000000</color>
+    <color name="popupbackground">#6e000000</color>
+    <color name="machining_light_blue">#640288d1</color>
 </resources>
