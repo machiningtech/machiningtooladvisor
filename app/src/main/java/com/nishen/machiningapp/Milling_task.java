@@ -41,23 +41,24 @@ public class Milling_task extends AppCompatActivity {
     public void slotbutton(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, Slot_input.class);
+        ((MachiningData)getApplicationContext()).setProfile("Slot");
         startActivity(intent);
-        System.gc();
+
         //finish();
     }
 
     public void sidebutton(View view) {
         // Do something in response to button
-        //Intent intent = new Intent(this, Side_input.class);
-//TODO // FIXME: 2017/10/23 
-        //startActivity(intent);
+        Intent intent = new Intent(this, Side_input.class);
+        ((MachiningData)getApplicationContext()).setProfile("Side"); //set global Profile variable
+        startActivity(intent);
     }
 
     public void contourbutton(View view) {
         // Do something in response to button
-        //Intent intent = new Intent(this, Side_input.class);
-//TODO create new empyt sidemilling acticity
-    //    startActivity(intent);
+        Intent intent = new Intent(this, Contour_input.class);
+        ((MachiningData)getApplicationContext()).setProfile("Contour");
+        startActivity(intent);
     }
 
 

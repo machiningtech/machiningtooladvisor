@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="32dp"
             android:layout_marginTop="8dp"
+            android:onClick="sidebutton"
             android:text="@string/side_milling"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
@@ -55,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
-            android:onClick="sendMessage"
+            android:onClick="contourbutton"
             android:text="@string/contour_milling"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -91,21 +92,23 @@
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:onClick="contourbutton"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button2"
-            app:srcCompat="@drawable/profile_contour"
-            android:layout_marginStart="24dp" />
+            app:srcCompat="@drawable/profile_contour" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            app:srcCompat="@drawable/profile_side"
+            android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
+            android:onClick="sidebutton"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView2"
-            android:layout_marginEnd="24dp" />
+            app:srcCompat="@drawable/profile_side" />
 
         <ImageView
             android:id="@+id/imageView4"

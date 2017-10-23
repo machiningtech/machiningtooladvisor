@@ -38,7 +38,8 @@ public class Optimise_tools extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot<big>&#8658</big>Tools<big>&#8658</big>Optimise"));
+        String cut_profile = ((MachiningData)getApplicationContext()).getProfile();
+        setTitle(Html.fromHtml("Milling<big>&#8658</big>" + cut_profile + "<big>&#8658</big>Tools<big>&#8658</big>Optimise"));
         setContentView(R.layout.activity_optimise_tools);
 
 

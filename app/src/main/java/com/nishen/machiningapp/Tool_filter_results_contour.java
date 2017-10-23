@@ -1,10 +1,10 @@
 package com.nishen.machiningapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -14,29 +14,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
-import android.widget.TextClock;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import  java.lang.Math;
-
-import static android.content.Intent.getIntent;
 
 /**
  * Created by Nishen on 2017/09/19.
  */
 
-public class Tool_filter_results extends AppCompatActivity {
+public class Tool_filter_results_contour extends AppCompatActivity {
 
     ListView tool_results_list;
     TextView Diameter_header;
@@ -104,7 +96,7 @@ public class Tool_filter_results extends AppCompatActivity {
         tool_search_db.open();
 
     //Parse input data for database query
-        Cursor tool_search_list = tool_search_db.FilterToolsCursor(cut_profile, materialID);
+        Cursor tool_search_list = tool_search_db.FilterToolsCursorContour(cut_profile, materialID);
         //Parse input data for database query
         tool_search_list.moveToFirst();
         while (!tool_search_list.isAfterLast()) {
@@ -118,18 +110,6 @@ public class Tool_filter_results extends AppCompatActivity {
             String l2 = tool_search_list.getString(7);
             String re1 = tool_search_list.getString(8);
             String rakeAngle = tool_search_list.getString(9);
-            String Coolant = tool_search_list.getString(10);
-            String Ap_Dc = tool_search_list.getString(11);
-            String Ae_Dc = tool_search_list.getString(12);
-            String Fz6 = tool_search_list.getString(13);
-            String Fz8 = tool_search_list.getString(14);
-            String Fz10 = tool_search_list.getString(15);
-            String Fz12 = tool_search_list.getString(16);
-            String Cutting_speed = tool_search_list.getString(17);
-
-
-
-
 
             Cursor MaterialData = tool_search_db.getMaterialData(materialID);
             MaterialData.moveToFirst();
@@ -140,55 +120,20 @@ public class Tool_filter_results extends AppCompatActivity {
 
 
 /**     Calculate power, etc.. and filter hashmap for individual tool **/
-            //Assign feed/tooth (mm) based on Diameter
-            String Feed_per_tooth = "0.1";
-            if (Diameter == "6"){
-                Feed_per_tooth = Fz6;
-            } else if (Diameter == "8"){
-                Feed_per_tooth = Fz8;
-            }else if (Diameter == "10"){
-                Feed_per_tooth = Fz10;
-            }else if (Diameter == "12"){
-                Feed_per_tooth = Fz12;
-            }
-            //Assign feed/tooth (mm) based on Diameter
 
             double pi = Math.PI;
 
             //Material removal rate calculations
             double diameter = Double.parseDouble(Diameter);
-            double ApDc = Double.parseDouble(Ap_Dc);
 
-            double CutDepth;
-            if (((MachiningData)getApplicationContext()).isUserCutDataChecked()){
-                CutDepth = Double.parseDouble(((MachiningData)getApplicationContext()).getUserCutDepth());
-            } else {
-                CutDepth = ApDc * diameter ;
-            }
 
-            double AeDc = Double.parseDouble(Ae_Dc);
-
-            double CutWidth;
-            if (((MachiningData)getApplicationContext()).isUserCutDataChecked()){
-                CutWidth = Double.parseDouble(((MachiningData)getApplicationContext()).getUserCutWidth());
-            } else {
-                CutWidth = AeDc * diameter ;
-            }
-            double Vc;
-            if (((MachiningData)getApplicationContext()).isUserCutDataChecked()){
-                Vc = Double.parseDouble(((MachiningData)getApplicationContext()).getUserCuttingSpeed());
-            } else {
-                Vc = Double.parseDouble(Cutting_speed);
-            }
-
+            double CutDepth = Double.parseDouble(((MachiningData)getApplicationContext()).getUserCutDepth());
+            double CutWidth = Double.parseDouble(((MachiningData)getApplicationContext()).getUserCutWidth());
+            double Vc = Double.parseDouble(((MachiningData)getApplicationContext()).getUserCuttingSpeed());
 
             double SpindleSpeed = Vc / (pi * diameter);
-            double Fz;
-            if (((MachiningData)getApplicationContext()).isUserCutDataChecked()){
-                Fz = Double.parseDouble(((MachiningData)getApplicationContext()).getUserFeedPerTooth());
-            } else {
-                Fz = Double.parseDouble(Feed_per_tooth);
-            }
+            String Feed_per_tooth = ((MachiningData)getApplicationContext()).getUserFeedPerTooth();
+            double Fz = Double.parseDouble(Feed_per_tooth);
             double zn = Double.parseDouble(FluteNumber);
             double FeedVelocity = SpindleSpeed * Fz * zn;
 
@@ -294,7 +239,6 @@ public class Tool_filter_results extends AppCompatActivity {
             tool.put("l2", l2);
             tool.put("re1", re1);
             tool.put("rakeAngle", rakeAngle);
-            tool.put("Coolant", Coolant);
             tool.put("CutDepth", Cut_depth);
             tool.put("CutWidth", Cut_width);
             tool.put("Fz", Feed_per_tooth);

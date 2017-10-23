@@ -52,6 +52,17 @@ android:layout_height="wrap_content"
         android:textColor="@color/machining_dark_gray" />
 
     <TextView
+        android:id="@+id/CutWidthPerPass_header"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/tool_width_per_pass"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/machining_dark_gray" />
+
+    <TextView
         android:id="@+id/CutDepthPerPass_header"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
@@ -62,16 +73,6 @@ android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textColor="@color/machining_dark_gray" />
 
-    <TextView
-        android:id="@+id/CutWidthPerPass_header"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/tool_width_per_pass"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textColor="@color/machining_dark_gray" />
 
     <TextView
         android:id="@+id/CuttingSpeed_header"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nishen.machiningapp.Side_input"
+    tools:context="com.nishen.machiningapp.Contour_input"
     android:id="@+id/container"
     >
 
@@ -288,7 +288,7 @@
 
         <!-- Initially hidden Imageviews for expandable feature dimension pictures -->
         <ImageView
-            android:id="@+id/profile_side_length_big"
+            android:id="@+id/profile_contour_length_big"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginTop="60dp"
@@ -297,10 +297,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile_slot_length" />
+            app:srcCompat="@drawable/profile_contour_length" />
 
         <ImageView
-            android:id="@+id/profile_side_width_big"
+            android:id="@+id/profile_contour_width_big"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginTop="66dp"
@@ -309,10 +309,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile_slot_width" />
+            app:srcCompat="@drawable/profile_contour_width" />
 
         <ImageView
-            android:id="@+id/profile_side_depth_big"
+            android:id="@+id/profile_contour_depth_big"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginTop="84dp"
@@ -321,11 +321,11 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile_slot_depth" />
+            app:srcCompat="@drawable/profile_contour_depth" />
         <!-- Initially hidden Imageviews for expandable feature dimension pictures -->
 
         <ImageView
-            android:id="@+id/profile_side_corner_radius_big"
+            android:id="@+id/profile_slot_corner_radius_big"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_marginLeft="33dp"
@@ -336,49 +336,49 @@
             app:srcCompat="@drawable/profile_slot_corner_radius" />
 
         <ImageButton
-            android:id="@+id/side_length_imagebutton"
+            android:id="@+id/contour_length_imagebutton"
             style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/profile_side_length_thumb"
+            android:background="@drawable/profile_contour_length_thumb"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="107dp"
             android:layout_marginLeft="200dp"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <ImageButton
-            android:id="@+id/side_width_imagebutton"
+            android:id="@+id/contour_width_imagebutton"
             style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/profile_side_width_thumb"
-            app:layout_constraintLeft_toLeftOf="@+id/side_length_imagebutton"
+            android:background="@drawable/profile_contour_width_thumb"
+            app:layout_constraintLeft_toLeftOf="@+id/contour_length_imagebutton"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/side_length_imagebutton" />
+            app:layout_constraintTop_toBottomOf="@+id/contour_length_imagebutton" />
 
         <ImageButton
-            android:id="@+id/side_depth_imagebutton"
+            android:id="@+id/contour_depth_imagebutton"
             style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/profile_side_depth_thumb"
-            app:layout_constraintLeft_toLeftOf="@+id/side_width_imagebutton"
+            android:background="@drawable/profile_contour_depth_thumb"
+            app:layout_constraintLeft_toLeftOf="@+id/contour_width_imagebutton"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/side_width_imagebutton" />
+            app:layout_constraintTop_toBottomOf="@+id/contour_width_imagebutton" />
 
         <ImageButton
-            android:id="@+id/side_corner_radius_imagebutton"
+            android:id="@+id/contour_corner_radius_imagebutton"
             style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="0dp"
             android:layout_marginStart="3dp"
             android:layout_marginTop="14dp"
-            android:background="@drawable/profile_side_corner_radius_thumb"
-            app:layout_constraintLeft_toLeftOf="@+id/side_depth_imagebutton"
-            app:layout_constraintTop_toBottomOf="@+id/side_depth_imagebutton" />
+            android:background="@drawable/profile_slot_corner_radius_thumb"
+            app:layout_constraintLeft_toLeftOf="@+id/contour_depth_imagebutton"
+            app:layout_constraintTop_toBottomOf="@+id/contour_depth_imagebutton" />
 
         <TextView
             android:id="@+id/textView22"
@@ -392,25 +392,16 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-        <Switch
-            android:id="@+id/UserCutDataSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="22dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
         <TextView
             android:id="@+id/EditUserCutData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
             android:text="Edit"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
-            app:layout_constraintRight_toLeftOf="@+id/UserCutDataSwitch"
-            android:layout_marginRight="32dp" />
+            app:layout_constraintRight_toRightOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

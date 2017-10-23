@@ -71,6 +71,7 @@ public class filteredToolsAdapter extends BaseAdapter {
         DecimalFormat formatter2 = new DecimalFormat("#0.00");
 
         double CuttingSpeed = Double.parseDouble(map.get("CuttingSpeed"));
+        double CutWidth = Double.parseDouble(map.get("CutWidth"));
         double CutDepth = Double.parseDouble(map.get("CutDepth"));
         double MMR = Double.parseDouble(map.get("MMR"));
         double CuttingPower = Double.parseDouble(map.get("CuttingPower"));
@@ -82,7 +83,7 @@ public class filteredToolsAdapter extends BaseAdapter {
         viewHolder.CuttingLength.setText(map.get("CuttingLength"));
         viewHolder.FluteNumber.setText(map.get("FluteNumber"));
         viewHolder.CutDepthPerPass.setText(formatter1.format(CutDepth));
-        viewHolder.CutWidthPerPass.setText(map.get("CutWidth"));
+        viewHolder.CutWidthPerPass.setText(formatter1.format(CutWidth));
         viewHolder.MaterialRemovalRate.setText(formatter1.format(MMR));
         viewHolder.CuttingSpeed.setText(formatter0.format(CuttingSpeed));
         viewHolder.CuttingPower.setText(formatter2.format(CuttingPower));

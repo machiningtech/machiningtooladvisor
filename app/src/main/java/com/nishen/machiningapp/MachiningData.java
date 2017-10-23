@@ -24,9 +24,10 @@ public class MachiningData extends Application {
 
     boolean UserCutDataChecked;
 
-    private double userCutWidth;
-    private double userCutDepth;
-    private double userCuttingSpeed;
+    private String userCutWidth;
+    private String userCutDepth;
+    private String userCuttingSpeed;
+    private String userFeedPerTooth;
 
     private ArrayList<HashMap<String, String>> FilteredToolList;
     private ArrayList<HashMap<String, String>> ToolList;
@@ -121,28 +122,36 @@ public class MachiningData extends Application {
         UserCutDataChecked = userCutDataChecked;
     }
 
-    public double getUserCutWidth() {
+    public String getUserCutWidth() {
         return userCutWidth;
     }
 
-    public void setUserCutWidth(double userCutWidth) {
+    public void setUserCutWidth(String userCutWidth) {
         this.userCutWidth = userCutWidth;
     }
 
-    public double getUserCutDepth() {
+    public String getUserCutDepth() {
         return userCutDepth;
     }
 
-    public void setUserCutDepth(double userCutDepth) {
+    public void setUserCutDepth(String userCutDepth) {
         this.userCutDepth = userCutDepth;
     }
 
-    public double getUserCuttingSpeed() {
+    public String getUserCuttingSpeed() {
         return userCuttingSpeed;
     }
 
-    public void setUserCuttingSpeed(double userCuttingSpeed) {
+    public void setUserCuttingSpeed(String userCuttingSpeed) {
         this.userCuttingSpeed = userCuttingSpeed;
+    }
+
+    public String getUserFeedPerTooth() {
+        return userFeedPerTooth;
+    }
+
+    public void setUserFeedPerTooth(String userFeedPerTooth) {
+        this.userFeedPerTooth = userFeedPerTooth;
     }
 
     public ArrayList<HashMap<String, String>> getFilteredToolList() {

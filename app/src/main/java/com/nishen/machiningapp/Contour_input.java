@@ -57,7 +57,7 @@ import static com.nishen.machiningapp.R.id.parent;
 import static com.nishen.machiningapp.R.id.textView;
 
 
-public class Side_input extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Contour_input extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     /**
@@ -90,34 +90,16 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
         super.onCreate(savedInstanceState);
         String cut_profile = ((MachiningData)getApplicationContext()).getProfile();
         setTitle(Html.fromHtml("Milling<big>&#8658</big>" +cut_profile));
-        setContentView(R.layout.activity_side_input);
+        setContentView(R.layout.activity_contour_input);
         //materialList = new ArrayList<>();
         //cnr_radius_list = new ArrayList<>();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-/**  Function to load the materials spinner data from SQLite database
- material_spinner = (Spinner)findViewById(R.id.material_spinner);
- DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
- databaseAccess.open();
- Cursor materials =databaseAccess.getMaterialsCursor();
- materials.moveToFirst();
- while (!materials.isAfterLast()) {
- String SMG = materials.getString(0);
- String Description = materials.getString(1);
- HashMap<String, String> material = new HashMap<>();
- //add each value to temporary hashmap
- material.put("SMG", SMG);
- material.put("Description", Description);
- //add material to materialList
- materialList.add(material);
- materials.moveToNext();
- }
- materials.close();
 
- materialArrayAdapter adapter = new materialArrayAdapter(Slot_input.this, materialList);
- this.material_spinner.setAdapter(adapter);
- /**  Function to load the materials spinner data from SQLite database */
+        ((MachiningData)getApplicationContext()).setUserCutDepth("");
+        ((MachiningData)getApplicationContext()).setUserCutWidth("");
+        ((MachiningData)getApplicationContext()).setUserCuttingSpeed("");
 
         //material_spinner.setOnItemSelectedListener(new materialSpinnerListener());
 
@@ -131,7 +113,7 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
         cnr_radius_list.add(0, "Any");
 
         cnr_radius_db.close();
-        ArrayAdapter<String> cnr_radius_adapter = new ArrayAdapter<String>(Side_input.this, android.R.layout.simple_spinner_item, cnr_radius_list);
+        ArrayAdapter<String> cnr_radius_adapter = new ArrayAdapter<String>(Contour_input.this, android.R.layout.simple_spinner_item, cnr_radius_list);
         cnr_radius_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cnr_radius_spinner.setAdapter(cnr_radius_adapter);
 
@@ -139,35 +121,36 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
         cnr_radius_spinner.setOnItemSelectedListener(new cornerRadiusSpinnerListener());
 
 // Zoomable image buttons
-        final View side_length_view = findViewById(R.id.side_length_imagebutton);
-        side_length_view.setOnClickListener(new View.OnClickListener() {
+
+        final View contour_length_view = findViewById(R.id.contour_length_imagebutton);
+        contour_length_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(side_length_view, R.drawable.profile_side_length);
+                zoomImageFromThumb(contour_length_view, R.drawable.profile_contour_length);
             }
         });
 
-        final View side_width_view = findViewById(R.id.side_width_imagebutton);
-        side_width_view.setOnClickListener(new View.OnClickListener() {
+        final View contour_width_view = findViewById(R.id.contour_width_imagebutton);
+        contour_width_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(side_width_view, R.drawable.profile_side_width);
+                zoomImageFromThumb(contour_width_view, R.drawable.profile_contour_width);
             }
         });
 
-        final View side_depth_view = findViewById(R.id.side_depth_imagebutton);
-        side_depth_view.setOnClickListener(new View.OnClickListener() {
+        final View contour_depth_view = findViewById(R.id.contour_depth_imagebutton);
+        contour_depth_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(side_depth_view, R.drawable.profile_side_depth);
+                zoomImageFromThumb(contour_depth_view, R.drawable.profile_contour_depth);
             }
         });
 
-        final View side_cnr_radius_view = findViewById(R.id.side_corner_radius_imagebutton);
-        side_cnr_radius_view.setOnClickListener(new View.OnClickListener() {
+        final View slot_cnr_radius_view = findViewById(R.id.contour_corner_radius_imagebutton);
+        slot_cnr_radius_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(side_cnr_radius_view, R.drawable.profile_side_corner_radius);
+                zoomImageFromThumb(slot_cnr_radius_view, R.drawable.profile_slot_corner_radius);
             }
         });
 
@@ -219,26 +202,13 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
         clamping_spinner.setOnItemSelectedListener(new clampingSpinnerListener());
 
         user_cutdata_input_edit = (TextView) findViewById(R.id.EditUserCutData);
+        user_cutdata_input_edit.setTextColor(getResources().getColor(R.color.colorPrimary));
         user_cutdata_input_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserCutdataWindow(true);
 
 
-
-
-            }
-        });
-        user_cutdata_switch = (Switch) findViewById(R.id.UserCutDataSwitch);
-        user_cutdata_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    user_cutdata_input_edit.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    UserCutdataWindow(false);
-                } else {
-                    user_cutdata_input_edit.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                }
             }
         });
 
@@ -315,7 +285,6 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
                     imm.hideSoftInputFromWindow(popupView.getWindowToken(), 0);
 
                     popupWindow.dismiss();
-                    user_cutdata_switch.toggle();
 
 
                 }
@@ -337,37 +306,33 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
     }
 
     public void searchtools (View view) {
-        Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
-        //Bundle input_data_bundle = new Bundle();
-        //insert data into bundle
+        Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results_contour.class);
 
-        //input_data_bundle.putString("coolant", "");
-        //input_data_bundle.putString("clamping", "");
-        //input_data_bundle.putString("operation_type", "");
-        //input_data_bundle.putString("machine", "");
-
-        //filter_tools.putExtras(input_data_bundle);
 
         //Grab cut dimensions and add to global variables
-        EditText CutLength = (EditText)findViewById(R.id.cut_length);
+        EditText CutLength = (EditText) findViewById(R.id.cut_length);
         String cut_length = CutLength.getText().toString();
-        ((MachiningData)getApplicationContext()).setCutLength(cut_length);
+        ((MachiningData) getApplicationContext()).setCutLength(cut_length);
 
-        EditText CutWidth = (EditText)findViewById(R.id.cut_width);
+        EditText CutWidth = (EditText) findViewById(R.id.cut_width);
         String cut_width = CutWidth.getText().toString();
-        ((MachiningData)getApplicationContext()).setCutWidth(cut_width);
+        ((MachiningData) getApplicationContext()).setCutWidth(cut_width);
 
-        //TODO filter tool diameter from sql db when width is less than diameter
 
-        EditText CutDepth = (EditText)findViewById(R.id.cut_depth);
+        EditText CutDepth = (EditText) findViewById(R.id.cut_depth);
         String cut_depth = CutDepth.getText().toString();
-        ((MachiningData)getApplicationContext()).setCutDepth(cut_depth);
-
-        ((MachiningData)getApplicationContext()).setUserCutDataChecked(user_cutdata_switch.isChecked());
+        ((MachiningData) getApplicationContext()).setCutDepth(cut_depth);
 
 
-        startActivity(filter_tools);
-        finish();
+        if (((MachiningData) getApplicationContext()).getUserCutWidth().trim().equals("") | ((MachiningData) getApplicationContext()).getUserCutDepth().trim().equals("") | ((MachiningData) getApplicationContext()).getUserCuttingSpeed().trim().equals("")) {
+
+            Toast.makeText(getApplicationContext(), "Please fill in preferred cutting conditions", Toast.LENGTH_SHORT).show();
+
+        } else {
+
+            startActivity(filter_tools);
+            finish();
+        }
     }
 
     /**
@@ -393,7 +358,7 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
         }
 
         // Load the high-resolution "zoomed-in" image.
-        final ImageView expandedImageView = (ImageView) findViewById(R.id.profile_side_length_big);
+        final ImageView expandedImageView = (ImageView) findViewById(R.id.profile_contour_length_big);
         expandedImageView.setImageResource(imageResId);
 
         // Calculate the starting and ending bounds for the zoomed-in image. This step
@@ -602,7 +567,6 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
             materialList = new ArrayList<HashMap<String, String>>();
             //cnr_radius_list= ;
 
-
             /**  Function to load the materials spinner data from SQLite database */
             material_spinner = (Spinner)findViewById(R.id.material_spinner);
             DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
@@ -637,7 +601,7 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
         protected void onPostExecute(Void result) {
 
             /**  Setting the materials spinner data from SQLite database */
-            materialArrayAdapter adapter = new materialArrayAdapter(Side_input.this, materialList);
+            materialArrayAdapter adapter = new materialArrayAdapter(Contour_input.this, materialList);
             material_spinner.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             material_spinner.setOnItemSelectedListener(new materialSpinnerListener());

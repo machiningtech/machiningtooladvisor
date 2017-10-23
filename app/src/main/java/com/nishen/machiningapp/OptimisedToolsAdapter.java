@@ -69,6 +69,7 @@ public class OptimisedToolsAdapter extends BaseAdapter {
         DecimalFormat formatter2 = new DecimalFormat("#0.00");
 
         double CuttingSpeed = Double.parseDouble(element.get("CuttingSpeed"));
+        double CutWidth = Double.parseDouble(element.get("CutWidth"));
         double CutDepth = Double.parseDouble(element.get("CutDepth"));
         double MMR = Double.parseDouble(element.get("MMR"));
         double CuttingPower = Double.parseDouble(element.get("CuttingPower"));
@@ -78,7 +79,7 @@ public class OptimisedToolsAdapter extends BaseAdapter {
         viewHolder.diameter.setText(element.get("Diameter"));
         viewHolder.score.setText(element.get("Score"));
         viewHolder.CutDepthPerPass.setText(formatter1.format(CutDepth));
-        viewHolder.CutWidthPerPass.setText(element.get("CutWidth"));
+        viewHolder.CutWidthPerPass.setText(formatter1.format(CutWidth));
         viewHolder.CuttingSpeed.setText(formatter0.format(CuttingSpeed));
         viewHolder.power.setText(formatter2.format(CuttingPower));
         viewHolder.mmr.setText(formatter1.format(MMR));

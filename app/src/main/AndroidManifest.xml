@@ -22,18 +22,26 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".Tool_filter_results"></activity>
+
         <activity android:name=".Side_input">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Machine_management" />
+        <activity android:name=".Contour_input">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Tool_filter_results" />
+        <activity android:name=".Tool_filter_results_contour"></activity>
         <activity android:name=".Optimise_tools">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".Machine_management" />
     </application>
 
 </manifest>

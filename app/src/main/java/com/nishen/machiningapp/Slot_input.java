@@ -88,7 +88,8 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(Html.fromHtml("Milling<big>&#8658</big>Slot"));
+        String cut_profile = ((MachiningData)getApplicationContext()).getProfile();
+        setTitle(Html.fromHtml("Milling<big>&#8658</big>" +cut_profile));
         setContentView(R.layout.activity_slot_input);
         //materialList = new ArrayList<>();
         //cnr_radius_list = new ArrayList<>();
@@ -275,6 +276,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
             final EditText CutWidth = (EditText)popupView.findViewById(R.id.userCutWidthPerPass);
             final EditText CutDepth = (EditText)popupView.findViewById(R.id.userCutDepthPerPass);
             final EditText CuttingSpeed = (EditText)popupView.findViewById(R.id.userCuttingSpeed);
+            final EditText FeedPerTooth = (EditText)popupView.findViewById(R.id.userFeedPerTooth);
 
             /**if (Edit && !UserCutWidth.trim().equals("") && !UserCutDepth.trim().equals("") && UserCuttingSpeed.trim().equals("")){
                 CutWidth.setText(UserCutWidth);
@@ -289,14 +291,15 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
             Done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (CutWidth.getText().toString().trim().equals("") | CutDepth.getText().toString().trim().equals("") | CuttingSpeed.getText().toString().trim().equals("") ) {
+                    if (CutWidth.getText().toString().trim().equals("") | CutDepth.getText().toString().trim().equals("") | CuttingSpeed.getText().toString().trim().equals("") | FeedPerTooth.getText().toString().trim().equals("") ) {
 
                         Toast.makeText(getApplicationContext(), "Please fill in the details", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        ((MachiningData) getApplicationContext()).setUserCutWidth(Double.parseDouble(CutWidth.getText().toString()));
-                        ((MachiningData) getApplicationContext()).setUserCutDepth(Double.parseDouble(CutDepth.getText().toString()));
-                        ((MachiningData) getApplicationContext()).setUserCuttingSpeed(Double.parseDouble(CuttingSpeed.getText().toString()));
+                        ((MachiningData) getApplicationContext()).setUserCutWidth(CutWidth.getText().toString());
+                        ((MachiningData) getApplicationContext()).setUserCutDepth(CutDepth.getText().toString());
+                        ((MachiningData) getApplicationContext()).setUserCuttingSpeed(CuttingSpeed.getText().toString());
+                        ((MachiningData) getApplicationContext()).setUserFeedPerTooth(FeedPerTooth.getText().toString());
                         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(popupView.getWindowToken(), 0);
                         popupWindow.dismiss();
@@ -598,7 +601,6 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
             materialList = new ArrayList<HashMap<String, String>>();
             //cnr_radius_list= ;
-            ((MachiningData)getApplicationContext()).setProfile("Slot"); //set global Profile variable
 
         /**  Function to load the materials spinner data from SQLite database */
             material_spinner = (Spinner)findViewById(R.id.material_spinner);
