@@ -1,6 +1,7 @@
 package com.nishen.machiningapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,15 +41,23 @@ public class Milling_task extends AppCompatActivity {
     public void slotbutton(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, Slot_input.class);
-
         startActivity(intent);
+        System.gc();
+        //finish();
     }
 
     public void sidebutton(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Side_input.class);
+        //Intent intent = new Intent(this, Side_input.class);
+//TODO // FIXME: 2017/10/23 
+        //startActivity(intent);
+    }
 
-        startActivity(intent);
+    public void contourbutton(View view) {
+        // Do something in response to button
+        //Intent intent = new Intent(this, Side_input.class);
+//TODO create new empyt sidemilling acticity
+    //    startActivity(intent);
     }
 
 
@@ -89,11 +98,11 @@ public class Milling_task extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item1:
-           //     Toast.makeText(getApplicationContext(),"Item 1 Selected",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, Machine_management.class);
+                startActivity(intent);
                 return true;
-            case R.id.item2:
 
-                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

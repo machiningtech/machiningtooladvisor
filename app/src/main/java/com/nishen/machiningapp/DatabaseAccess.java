@@ -4,6 +4,7 @@ package com.nishen.machiningapp;
  * Created by Nishen on 2017/09/18.
  */
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,18 +97,7 @@ public class DatabaseAccess {
     };
 
 
- /**   public List<String> FilterTools(String profile) {
-        List<String> usable_tools = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT "+ "Part_No" +" FROM Tool WHERE " + "Profile" + " LIKE '%" + profile + "%'", null);
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            usable_tools.add(cursor.getString(0));
-            cursor.moveToNext();
-        }
-        cursor.close();
-        return usable_tools;
-    }**/
 
     public List<String> unique_corner_radius() {
         List<String> corner_radius_list = new ArrayList<>();
@@ -134,23 +125,38 @@ public class DatabaseAccess {
         return machine_list;
     }
 
+    public Cursor getMyMachines() {
+        Cursor cursor = database.rawQuery("SELECT Name, Power FROM Machine", null);
+        return cursor;
+    }
+
     public Cursor getMaterialData(String materialID){
         Cursor cursor = database.rawQuery("SELECT SMG, HB, UTS, kc, Yield FROM Material WHERE ID = '" + materialID + "'", null);
         return cursor;
     }
 
     public void setMachine(String Name, String Power){
-        database.rawQuery("INSERT into Machine(Name, Power) VALUES ('" + Name +"'," + Power + ")", null);
+        //database.rawQuery("INSERT into Machine(Name, Power) VALUES ('" + Name +"'," + Power + ");", null);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Name", Name);
+        contentValues.put("Power", Power);
+        database.insert("Machine",null, contentValues);
     }
 
-    public void deleteMachine (String position){
-        database.rawQuery("DELETE FROM Machine WHERE id = " + position, null);
+    public void deleteMachine (String name){
+        //database.rawQuery("DELETE FROM Machine WHERE ID = '" + position + "'", null);
+
+        database.delete("Machine", "Name = '" + name + "'", null);
     }
 
     public Bitmap getToolDiagram(String FamilyName) {
         Cursor cursor = database.rawQuery("SELECT Picture FROM Tool_pictures WHERE Name ='" + FamilyName +"'", null);
+        cursor.moveToFirst();
         byte [] imageByteStream = cursor.getBlob(0);
-        return BitmapFactory.decodeByteArray(imageByteStream, 0, imageByteStream.length);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageByteStream);
+        cursor.close();
+        return BitmapFactory.decodeStream(inputStream);
+        //return BitmapFactory.decodeByteArray(imageByteStream, 0, imageByteStream.length);
     }
 
 

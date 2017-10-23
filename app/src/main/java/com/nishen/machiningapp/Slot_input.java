@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -329,7 +331,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
         catch (Exception e) {
             e.printStackTrace();
         }
-    };
+    }
 
     public void searchtools (View view) {
         Intent filter_tools = new Intent(getApplicationContext(), Tool_filter_results.class);
@@ -362,7 +364,7 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
 
         startActivity(filter_tools);
-
+        finish();
     }
 
     /**
@@ -644,7 +646,27 @@ public class Slot_input extends AppCompatActivity implements AdapterView.OnItemS
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);//Menu Resource, Menu
+        return true;
+    }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Intent intent = new Intent(this, Machine_management.class);
+
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/verylightgray">
+
+        <FrameLayout
+            android:id="@+id/toolframe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:layout_marginBottom="32dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ToolName"
+            app:layout_constraintVertical_bias="0.5">
+
+            <ImageView
+                android:id="@+id/OptimisedToolDiagram"
+                android:layout_width="240dp"
+                android:layout_height="200dp"
+                android:layout_margin="2dp"
+
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/empty_diagram" />
+
+        </FrameLayout>
+
+
+
+        <TextView
+            android:id="@+id/ToolName"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Tool name: "
+            android:textColor="@color/machining_dark_gray"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ToolShape"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="8dp"
+            android:text="Tool shape: "
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/toolframe"
+            app:layout_constraintTop_toTopOf="@+id/toolframe" />
+
+        <TextView
+            android:id="@+id/Dc"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:text="Dc: "
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/ToolShape"
+            app:layout_constraintTop_toBottomOf="@+id/ToolShape" />
+
+        <TextView
+            android:id="@+id/dmm"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:text="dmm: "
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/Dc"
+            app:layout_constraintTop_toBottomOf="@+id/Dc" />
+
+        <TextView
+            android:id="@+id/ap"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:text="ap: "
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/dmm"
+            app:layout_constraintTop_toBottomOf="@+id/dmm" />
+
+        <TextView
+            android:id="@+id/l2"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:text="l2: "
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/ap"
+            app:layout_constraintTop_toBottomOf="@+id/ap" />
+
+        <TextView
+            android:id="@+id/re1"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:text="re1: "
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/l2"
+            app:layout_constraintTop_toBottomOf="@+id/l2" />
+
+        <TextView
+            android:id="@+id/Flutes"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:text="Flutes: "
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@+id/re1"
+            app:layout_constraintTop_toBottomOf="@+id/re1" />
+
+        <TextView
+            android:id="@+id/Rake"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:text="Rake: "
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/toolframe"
+            app:layout_constraintTop_toBottomOf="@+id/Flutes" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

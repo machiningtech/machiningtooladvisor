@@ -10,6 +10,8 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -72,7 +74,7 @@ public class Tool_filter_results extends AppCompatActivity {
         CuttingSpeed_header.setText(Html.fromHtml("Cutting Speed <small><b><em>m/min</em></b></small>"));
 
         CuttingPower_header = (TextView) findViewById(R.id.CuttingPower_header);
-        CuttingPower_header.setText(Html.fromHtml("Cutting Power <small><b><em>kW</em></b></small"));
+        CuttingPower_header.setText(Html.fromHtml("Cutting Power <small><b><em>kW</em></b></small>"));
 
         MMR_header = (TextView) findViewById(R.id.MMR_header);
         MMR_header.setText(Html.fromHtml("Material Removal Rate <small><b><em>mm<sup><small>3</small></sup>/min</em></b></small>"));
@@ -271,7 +273,6 @@ public class Tool_filter_results extends AppCompatActivity {
 
             HashMap<String, String> tool = new HashMap<>();
             //add each value to temporary hashmap
-            // TODO: If query db again after optimise, these data not required. USE ID if re grabbing data from db. otherwise store data here.
 
             tool.put("Name", Name);
             tool.put("Diameter", Diameter);
@@ -424,7 +425,27 @@ public class Tool_filter_results extends AppCompatActivity {
 
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);//Menu Resource, Menu
+        return true;
+    }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Intent intent = new Intent(this, Machine_management.class);
+
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 }
