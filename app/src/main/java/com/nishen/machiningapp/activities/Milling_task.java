@@ -1,11 +1,8 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nishen.machiningapp.R;
+import com.nishen.machiningapp.models.MachiningData;
 
 /**
  * Created by Nishen on 2017/09/20.
@@ -77,7 +77,7 @@ public class Milling_task extends AppCompatActivity {
     //show custom Toast in android
     private void showCustomToast(String showToast) {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_toast_layout,
+        View layout = inflater.inflate(R.layout.content_custom_toast_layout,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
         TextView text = (TextView) layout.findViewById(R.id.text);
         text.setText(showToast);

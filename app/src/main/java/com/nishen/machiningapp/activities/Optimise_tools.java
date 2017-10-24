@@ -1,7 +1,6 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.activities;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.constraint.ConstraintLayout;
@@ -13,11 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.nishen.machiningapp.adapters.OptimisedToolsAdapter;
+import com.nishen.machiningapp.R;
+import com.nishen.machiningapp.utils.TOPSIS;
+import com.nishen.machiningapp.helpers.DatabaseAccess;
+import com.nishen.machiningapp.models.MachiningData;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -122,7 +126,7 @@ public class Optimise_tools extends AppCompatActivity {
 
         ArrayList<HashMap<String, String>> Top5Tools = new ArrayList<>();
 
-        for (int position = 0; position < 5; position++){
+        for (int position = 0; position < 4; position++){
             Top5Tools.add(filteredToolList.get(position));
         }
 
@@ -183,7 +187,7 @@ public class Optimise_tools extends AppCompatActivity {
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            final View popupView = inflater.inflate(R.layout.optimised_tool_details, null);
+            final View popupView = inflater.inflate(R.layout.content_optimised_tool_details, null);
 
             // create the popup window
             //boolean focusable = false; // lets taps outside the popup also dismiss it

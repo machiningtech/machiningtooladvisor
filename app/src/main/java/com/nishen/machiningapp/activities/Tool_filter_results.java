@@ -1,4 +1,4 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.activities;
 
 import android.database.Cursor;
 import android.graphics.Color;
@@ -14,23 +14,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
-import android.widget.TextClock;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
+import com.nishen.machiningapp.R;
+import com.nishen.machiningapp.activities.Machine_management;
+import com.nishen.machiningapp.activities.Optimise_tools;
+import com.nishen.machiningapp.adapters.filteredToolsAdapter;
+import com.nishen.machiningapp.helpers.DatabaseAccess;
+import com.nishen.machiningapp.models.MachiningData;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import  java.lang.Math;
-
-import static android.content.Intent.getIntent;
 
 /**
  * Created by Nishen on 2017/09/19.
@@ -98,8 +99,8 @@ public class Tool_filter_results extends AppCompatActivity {
 
         /** Populating Tool results listview **/
         tool_results_list= (ListView) findViewById(R.id.toolList);
-        //View tool_header = getLayoutInflater().inflate(R.layout.tool_header, null);
-        //tool_results_list.addHeaderView(tool_header);
+        //View content_tool_header = getLayoutInflater().inflate(R.layout.content_tool_header, null);
+        //tool_results_list.addHeaderView(content_tool_header);
         DatabaseAccess tool_search_db = DatabaseAccess.getInstance(this);
         tool_search_db.open();
 
@@ -351,7 +352,7 @@ public class Tool_filter_results extends AppCompatActivity {
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            final View popupView = inflater.inflate(R.layout.optimise_info_popup, null);
+            final View popupView = inflater.inflate(R.layout.fragment_optimise_info_popup, null);
 
             // create the popup window
             //boolean focusable = true; // lets taps outside the popup also dismiss it

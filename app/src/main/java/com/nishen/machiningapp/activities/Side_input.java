@@ -1,4 +1,4 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.activities;
 
 /**
  * Created by Nishen on 2017/09/19.
@@ -16,7 +16,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -34,12 +33,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
-import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -52,9 +47,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.nishen.machiningapp.R.id.material_spinner;
-import static com.nishen.machiningapp.R.id.parent;
-import static com.nishen.machiningapp.R.id.textView;
+import com.nishen.machiningapp.R;
+import com.nishen.machiningapp.adapters.materialArrayAdapter;
+import com.nishen.machiningapp.helpers.DatabaseAccess;
+import com.nishen.machiningapp.models.MachiningData;
 
 
 public class Side_input extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -261,7 +257,7 @@ public class Side_input extends AppCompatActivity implements AdapterView.OnItemS
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            final View popupView = inflater.inflate(R.layout.user_cutdata_popup, null);
+            final View popupView = inflater.inflate(R.layout.fragment_user_cutdata_popup, null);
 
             // create the popup window
             //boolean focusable = false; // lets taps outside the popup also dismiss it

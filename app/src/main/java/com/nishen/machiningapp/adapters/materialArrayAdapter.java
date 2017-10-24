@@ -1,4 +1,4 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.nishen.machiningapp.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +55,7 @@ public class materialArrayAdapter extends BaseAdapter {
         LayoutInflater inflater = activity.getLayoutInflater();
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.material_custom_item, null);
+            convertView = inflater.inflate(R.layout.content_material_custom_item, null);
 
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);

@@ -1,4 +1,4 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,6 +20,13 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.nishen.machiningapp.R;
+import com.nishen.machiningapp.activities.Machine_management;
+import com.nishen.machiningapp.activities.Optimise_tools;
+import com.nishen.machiningapp.adapters.filteredToolsAdapter;
+import com.nishen.machiningapp.helpers.DatabaseAccess;
+import com.nishen.machiningapp.models.MachiningData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,8 +97,8 @@ public class Tool_filter_results_contour extends AppCompatActivity {
 
         /** Populating Tool results listview **/
         tool_results_list= (ListView) findViewById(R.id.toolList);
-        //View tool_header = getLayoutInflater().inflate(R.layout.tool_header, null);
-        //tool_results_list.addHeaderView(tool_header);
+        //View content_tool_header = getLayoutInflater().inflate(R.layout.content_tool_header, null);
+        //tool_results_list.addHeaderView(content_tool_header);
         DatabaseAccess tool_search_db = DatabaseAccess.getInstance(this);
         tool_search_db.open();
 
@@ -295,7 +302,7 @@ public class Tool_filter_results_contour extends AppCompatActivity {
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            final View popupView = inflater.inflate(R.layout.optimise_info_popup, null);
+            final View popupView = inflater.inflate(R.layout.fragment_optimise_info_popup, null);
 
             // create the popup window
             //boolean focusable = true; // lets taps outside the popup also dismiss it

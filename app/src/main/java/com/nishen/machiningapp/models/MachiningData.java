@@ -1,4 +1,4 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.models;
 
 import android.app.Application;
 import android.support.annotation.CallSuper;

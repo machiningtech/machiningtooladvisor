@@ -1,18 +1,17 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.nishen.machiningapp.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Nishen on 2017/10/07.
@@ -53,7 +52,7 @@ public class filteredToolsAdapter extends BaseAdapter {
         LayoutInflater inflater = activity.getLayoutInflater();
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.filtered_tool_single_item, null);
+            convertView = inflater.inflate(R.layout.content_filtered_tool_single_item, null);
 
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);

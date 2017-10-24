@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nishen.machiningapp.Optimise_tools">
+    tools:context="com.nishen.machiningapp.activities.Optimise_tools">
 
     <TextView
         android:id="@+id/testV"
@@ -38,7 +38,7 @@
             android:orientation="vertical">
 
             <include
-                layout="@layout/optimised_tool_header"
+                layout="@layout/content_optimised_tool_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></include>
 

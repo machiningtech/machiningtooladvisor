@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nishen.machiningapp.Machine_management">
+    tools:context="com.nishen.machiningapp.activities.Machine_management">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/mymachines_header"
+        layout="@layout/content_mymachines_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

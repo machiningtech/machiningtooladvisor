@@ -1,6 +1,6 @@
 //TOPSIS Code for machining tool data optimisation
 
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.utils;
 import java.lang.Math;
 
 public class TOPSIS {

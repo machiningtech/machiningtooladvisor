@@ -3,41 +3,41 @@
     package="com.nishen.machiningapp">
 
     <application
-        android:name=".MachiningData"
+        android:name=".models.MachiningData"
         android:allowBackup="true"
         android:icon="@mipmap/endmill_launcher_cropped"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/endmill_launcher_cropped"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Milling_task">
+        <activity android:name=".activities.Milling_task">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Slot_input">
+        <activity android:name=".activities.Slot_input">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".Side_input">
+        <activity android:name=".activities.Side_input">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".Machine_management" />
-        <activity android:name=".Contour_input">
+        <activity android:name=".activities.Machine_management" />
+        <activity android:name=".activities.Contour_input">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".Tool_filter_results" />
-        <activity android:name=".Tool_filter_results_contour"></activity>
-        <activity android:name=".Optimise_tools">
+        <activity android:name=".activities.Tool_filter_results" />
+        <activity android:name=".activities.Tool_filter_results_contour"></activity>
+        <activity android:name=".activities.Optimise_tools">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

@@ -1,4 +1,4 @@
-package com.nishen.machiningapp;
+package com.nishen.machiningapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,16 +8,18 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nishen.machiningapp.R;
+import com.nishen.machiningapp.helpers.DatabaseAccess;
+import com.nishen.machiningapp.adapters.machineArrayAdapter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Machine_management extends AppCompatActivity {
     EditText Power;
